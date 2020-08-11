@@ -1,0 +1,1 @@
+This directory is used to store .png files that will be sent to NuSnow and the PL archive.

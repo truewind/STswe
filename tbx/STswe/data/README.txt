@@ -1,0 +1,1 @@
+This directory is used to store .mat files with the SWE data.
