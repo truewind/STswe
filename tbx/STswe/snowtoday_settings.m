@@ -3,20 +3,21 @@
 %% paths
 
 %%% specify root path for snow today operational files
-path_root = '/projects/raleighm/Snow-Today/operational/Matlab/';
+%%% as the location of this file
+path_root = fileparts(mfilename('fullpath'));
 
 %%% specify where the ssh key is stored
-path_ssh_key = '/home/raleighm/.ssh/id_rsa_snowToday';
+path_ssh_key = fullfile(getenv('HOME'), '.ssh', 'id_rsa_snowToday');
 
 %%% specify the PL archive location for images
-path_PL_archive = '/pl/active/rittger_esp/SnowToday/SnowStations/image_archive/';
+path_PL_archive = '/pl/active/rittger_esp/SnowToday/SnowStations/image_archive_dev/';
 
-%%% don't change these
-path_functions = fullfile(path_root, 'functions');
+%%% these are in the STswe project
 path_data = fullfile(path_root, 'data');
 path_staging = fullfile(path_root, 'staging');
 
-addpath(path_functions);
+%%% We are assuming that the location of the H2Snow functions is
+%%% already in the path
 
 %% download settings
 

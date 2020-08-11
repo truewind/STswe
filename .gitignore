@@ -9,3 +9,9 @@
 
 # Undo-tree save-files
 *.~undo-tree
+
+# Ignore the .mat files with the station data
+tbx/STswe/data/*.mat
+
+# Ignore the .png images meant to be made and archived each day
+tbx/STswe/staging/*.png
