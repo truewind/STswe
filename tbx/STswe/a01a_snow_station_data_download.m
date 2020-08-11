@@ -1,3 +1,4 @@
+% This is the script that downloads SWE data from NRCS and CDWR.
 clear; close all; 
 
 %% load common settings
