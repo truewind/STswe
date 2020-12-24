@@ -56,97 +56,42 @@ QC.min_dSWE = 5;            % minimum absolute daily change in SWE (mm)
 
 %% plotting settings
 
+%%% specify paths to shapefiles
+path_shp_states = fullfile(path_data, 'States', 'WesternUS_states_touching5tiles.shp');
+path_shp_counties = '';
+path_shp_huc02 = fullfile(path_data, 'HUC2', 'HUC2_9to17.shp');
+path_shp_huc04 = '';
+path_shp_huc06 = '';
+path_shp_huc08 = '';
+
+path_shp_ecoregions = fullfile(path_data, 'Ecoregions', 'westUSA_mtns.shp');
+
+%%% specify paths to tables defining numbers/names of political boundaries
+%%% (States, counties) and HUCs (2-8)
+path_tab_political = fullfile(path_data, 'political.txt');
+path_tab_huc = fullfile(path_data, 'huc_0208.txt');
+
 %%% minimum fraction of network (NRCS SNOTEL + CA) w/ data (can be 0 or above 0) to report the most recent date
 minSTAdata = 0.50;  
 
 %%% year requirements to include a station
 minYrs = 25;
 
-%%% select area of interest (AOI)
-AOI = [1];  
-% where 1=western USA (default view for Snow Today), 2=CO, 3=MT, 4=OR, 5=UT
-%       6=WY, 7=AZ, 8=ID, 9=NM, 10=CA, 11=WA
+%%% specify lat/lon buffer around each Area of Interest (AOI) in the maps
+lat_buff = 0.05;  % buffer at top and bottom of plot (as fraction)
+lon_buff = 0.05;  % buffer at left and right of plot (as fraction)
+latlon_aspRatio = 1.3; % target lat-lon aspect ratio for the maps
 
-%%% define names and lat/lon limits for each area of interest
-sdomain = cell(1,11);
-lat_ul = nan(1,11); 
-lat_ll=nan(1,11);
-lon_ul = nan(1,11); 
-lon_ll=nan(1,11);
+%%% select area of interest (AOI), both political and hydrologic
+AOI_POLITICAL = [0 4 6 8 16 30 32 35 41 46 49 53 56];  % FIPS codes for state or county. 0 = USWEST
+AOI_HYDRO = [10 11 12 13 14 15 16 17 18];   % HUC codes
 
-%%% western USA
-sdomain(1) = {'conus'};
-lat_ul(1) = 49.10;
-lat_ll(1) = 31.20;
-lon_ll(1) = -124.80;
-lon_ul(1) = -101.50;
+%%% cat into single AOI vector, and make political codes negative
+AOI.ID = [-1.*AOI_POLITICAL AOI_HYDRO];
+AOI.ID = unique(AOI.ID); % remove any duplicates
+if size(AOI.ID,1) ==1
+    AOI.ID = AOI.ID'; % make AOI a column vector
+end
+nAOI = numel(AOI.ID);
 
-%%% Colorado
-sdomain(2) = {'CO'};
-lat_ul(2) = 41.10;
-lat_ll(2) = 36.75;
-lon_ll(2) = -109.2;
-lon_ul(2) = -101.5;
 
-%%% Montana
-sdomain(3) = {'MT'};
-lat_ul(3) = 49.10;
-lat_ll(3) = 44.10;
-lon_ll(3) = -116.15;
-lon_ul(3) = -103.90;
-
-%%% Oregon
-sdomain(4) = {'OR'};
-lat_ul(4) = 46.35;
-lat_ll(4) = 41.90;
-lon_ll(4) = -124.70;
-lon_ul(4) = -116.20;
-
-%%% Utah
-sdomain(5) = {'UT'};
-lat_ul(5) = 42.10;
-lat_ll(5) = 36.90;
-lon_ll(5) = -114.15;
-lon_ul(5) = -108.90;
-
-%%% Wyoming
-sdomain(6) = {'WY'};
-lat_ul(6) = 45.10;
-lat_ll(6) = 40.90;
-lon_ll(6) = -111.15;
-lon_ul(6) = -103.95;
-
-%%% Arizona
-sdomain(7) = {'AZ'};
-lat_ul(7) = 37.10;
-lat_ll(7) = 31.20;
-lon_ll(7) = -115.10;
-lon_ul(7) = -108.90;
-
-%%% Idaho
-sdomain(8) = {'ID'};
-lat_ul(8) = 49.10;
-lat_ll(8) = 41.90;
-lon_ll(8) = -117.25;
-lon_ul(8) = -110.90;
-
-%%% New Mexico
-sdomain(9) = {'NM'};
-lat_ul(9) = 37.10;
-lat_ll(9) = 31.20;
-lon_ll(9) = -109.15;
-lon_ul(9) = -102.90;
-
-%%% California
-sdomain(10) = {'CA'};
-lat_ul(10) = 42.10;
-lat_ll(10) = 32.40;
-lon_ll(10) = -124.40;
-lon_ul(10) = -114.00;
-
-%%% Washington
-sdomain(11) = {'WA'};
-lat_ul(11) = 49.10;
-lat_ll(11) = 45.40;
-lon_ll(11) = -124.80;
-lon_ul(11) = -116.90;

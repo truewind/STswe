@@ -6,6 +6,9 @@ clear; close all;
 %%% load settings
 snowtoday_settings;
 
+%%% setup the spatial settings based on Areas of Interest
+snowtoday_spatial;
+
 %%% load the database
 load(all_database);
 
@@ -80,19 +83,50 @@ col_zero = ceil(ncol/2);
 SNOW.dSWE_clr(a) = col_zero;
 
 %%% cycle through Areas of Interest (AOI)
-for q=1:numel(AOI)
+for j=1:nAOI
     
-    %%% get number for this site
-    j = AOI(q);
     
-    figure(j);
-    
+    %%% get other info for this AOI
+    ShortName = char(AOI.ShortName(j));
+    LongName = char(AOI.LongName(j));
+    Type = AOI.Type(j);
+    shp_recNum = AOI.shp_recNum(j);
+      
     %%% get plotting limits and spatial domain
-    plot_lat_ll = lat_ll(j);
-    plot_lat_ul = lat_ul(j);
-    plot_lon_ll = lon_ll(j);
-    plot_lon_ul = lon_ul(j);
-    plot_sdomain = sdomain(j);
+    plot_lat_ll = AOI.lat_ll(j);
+    plot_lat_ul = AOI.lat_ul(j);
+    plot_lon_ll = AOI.lon_ll(j);
+    plot_lon_ul = AOI.lon_ul(j);
+    
+    %%% expand upper/lower limits of lat/lon for buffer
+    if strcmp(ShortName, 'USWEST')~=1
+        range_lat = abs(plot_lat_ul - plot_lat_ll);
+        range_lon = abs(plot_lon_ul - plot_lon_ll);
+        plot_lat_ll = plot_lat_ll - (range_lat.*lat_buff);
+        plot_lat_ul = plot_lat_ul + (range_lat.*lat_buff);
+        plot_lon_ll = plot_lon_ll - (range_lon.*lon_buff);
+        plot_lon_ul = plot_lon_ul + (range_lon.*lon_buff);
+    end
+
+    
+    %%% change plot lon/lat to meet target aspect ratio
+    range_lat = abs(plot_lat_ul - plot_lat_ll);
+    range_lon = abs(plot_lon_ul - plot_lon_ll);
+    center_lat = nanmean([plot_lat_ul plot_lat_ll]);
+    center_lon = nanmean([plot_lon_ul plot_lon_ll]);
+    if range_lon./range_lat>latlon_aspRatio
+        %%% need to expand lat ul and ll to make it fit
+        range_lat = abs(range_lon./latlon_aspRatio);
+        plot_lat_ul = center_lat + (range_lat/2);
+        plot_lat_ll = center_lat - (range_lat/2);
+    elseif range_lon./range_lat<latlon_aspRatio
+        %%% need to expand lon ul and ll to make it plot right
+        range_lon = abs(range_lat.*latlon_aspRatio);
+        plot_lon_ul = center_lon + (range_lon/2);
+        plot_lon_ll = center_lon - (range_lon/2);
+    end
+    
+    
     
     %%% subset to this area of interest
     a = find(SNOW.STA_LAT>=plot_lat_ll & SNOW.STA_LAT<=plot_lat_ul & SNOW.STA_LON >= plot_lon_ll & SNOW.STA_LON <= plot_lon_ul);
@@ -103,26 +137,59 @@ for q=1:numel(AOI)
     
     %% plot station locations
     
-    %%% construct map
-    ax = usamap(plot_sdomain);
+    %%% start a new figure
+    figure;
+    
+    %%% construct map. use conus as default
+    ax = usamap('conus');
     
     %%% set ax to invisible
     set(ax, 'Visible', 'off')
     
-    %%% specify grid (none for western US, grid for specific states)
-    if j==1
-        axesm('MapProjection','utm','grid','off')
+    %%% specify projection and turn off grid
+    if strcmp(ShortName, 'USWEST')==1
+        frame_opt='off';
     else
-        axesm('MapProjection','utm','grid','on')
+        frame_opt='on';
     end
+    axesm('MapProjection','utm','grid','off', 'frame', frame_opt)
+
     
     %%% set lat/lon limits
     setm(ax, 'MapLatLimit', [plot_lat_ll plot_lat_ul]);
     setm(ax, 'MapLonLimit', [plot_lon_ll plot_lon_ul]);
+
     
     %%% read shapefile and plot on map
     states = shaperead('usastatehi','UseGeoCoords', true);
-    geoshow(ax, states, 'FaceColor', 'none');
+    hstates=geoshow(ax, states, 'FaceColor', 'none');
+    set(hstates,'Clipping','on');
+    
+    %%% display the ecoregions to highlight mountain areas
+    ecoR = shaperead(path_shp_ecoregions);
+    oldField = 'X';
+    newField = 'Lon';
+    [ecoR.(newField)] = ecoR.(oldField);
+    ecoR = rmfield(ecoR,oldField);
+    oldField = 'Y';
+    newField = 'Lat';
+    [ecoR.(newField)] = ecoR.(oldField);
+    ecoR = rmfield(ecoR,oldField);
+    hEco=geoshow(ax, ecoR, 'FaceColor', [0.1 0.5 0.1], 'EdgeColor', 'none', 'facealpha',.3);
+
+    
+    %%% plot red outline of the shapefile (state or HUC) to highlight
+    if strcmp(ShortName, 'USWEST')~=1
+        
+        if strcmp(Type, 'state')==1
+            feat_lat = shp_states(shp_recNum).Y;
+            feat_lon = shp_states(shp_recNum).X;
+        elseif strcmp(Type, 'HUC02')==1
+            feat_lat = shp_huc02(shp_recNum).Y;
+            feat_lon = shp_huc02(shp_recNum).X;
+        end
+        geoshow(feat_lat, feat_lon, 'LineStyle', '-', 'Color', 'r', 'LineWidth', 1.5)
+    end
     
     hold on
     %%% loop through color bar and plot sites in each category
@@ -153,12 +220,21 @@ for q=1:numel(AOI)
     %%% annotations
     title({'Change in SWE (inches) in past 24 hours'; ['\rmPlot created: ' datestr(now, 'ddd mmm dd yyyy HH:MM PM') ' MT']; ['Data updated: ' datestr(datenum(iYR, iMO, iDA), 'ddd mmm dd yyyy HH:MM PM') ' MT']})
     
+    
+    
     colormap(cmap);
     cb=colorbar('SouthOutside');
     set(cb,'Xtick', linspace(0,1,numel(cbinLab)));
     set(cb,'XtickLabel', cbinLab);
     
     
+%     lgd=legend(hEco, 'mountains', 'Location', 'SouthOutside');
+%     legend boxoff
+%     lgd.FontSize = 8;
+
+
+    
+
     %% create png file
     fig = gcf;
     axis tight
@@ -173,16 +249,23 @@ for q=1:numel(AOI)
     ax_height = outerpos(4) - ti(2) - ti(4);
     ax.Position = [left bottom ax_width ax_height];
     
+
+
     
     fig.PaperUnits = 'inches';
     fig.PaperPosition = [0 0 5 5];
     set(gcf, 'Renderer', 'zbuffer');
+    
+    
+    %%% now that the figure is sized, add ylabel-like text for LongName
+    xl=get(gca,'xlim');
+    yl = get(gca,'ylim');
+    ht=text( xl(1) -((xl(2)-xl(1))*0.05), yl(1) +((yl(2)-yl(1))*0.05), LongName);
+    set(ht,'Rotation',90);
+    
+    
     cd(path_staging); % need to avoid  cd'ing... just write with full path
-    if j==1
-        slocation =''; % do not append a location for western US map
-    else
-        slocation = ['_' char(plot_sdomain)];
-    end
-    print([datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd')  '_dSWE' slocation],'-dpng','-r200')
+    
+    print([datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_' ShortName  '_dSWE'],'-dpng','-r200')
     cd(path_root);  % see above... change and remove this.
 end

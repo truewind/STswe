@@ -15,7 +15,8 @@
 cmap = cbrewer('div', 'RdBu', 13); 
 cbins = [0 45 55 65 75 85 95 105 115 125 135 145 165];
 cbinLab = cell(1,numel(cbins)+1);
-for j=1:numel(cbinLab)-1
+ncol = numel(cbinLab)-1;
+for j=1:ncol
     cbinLab(j) = cellstr(num2str(cbins(j)));
 end
 cbinLab(end) = {'%'};
