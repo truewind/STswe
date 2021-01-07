@@ -57,9 +57,9 @@ QC.min_dSWE = 5;            % minimum absolute daily change in SWE (mm)
 %% plotting settings
 
 %%% specify paths to shapefiles
-path_shp_states = fullfile(path_data, 'States', 'WesternUS_states_touching5tiles.shp');
+path_shp_states = fullfile(path_masks, 'State_masks.mat');
 path_shp_counties = '';
-path_shp_huc02 = fullfile(path_data, 'HUC2', 'HUC2_9to17.shp');
+path_shp_huc02 = fullfile(path_masks, 'HUC2_masks.mat');
 path_shp_huc04 = '';
 path_shp_huc06 = '';
 path_shp_huc08 = '';
