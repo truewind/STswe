@@ -15,6 +15,7 @@ path_PL_archive = '/pl/active/rittger_esp/SnowToday/SnowStations/image_archive/'
 %%% these are in the STswe project
 path_data = fullfile(path_root, 'data');
 path_staging = fullfile(path_root, 'staging');
+path_masks = fullfile(path_root, 'masks');
 
 %%% We are assuming that the location of the H2Snow functions is
 %%% already in the path
