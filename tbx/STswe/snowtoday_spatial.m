@@ -138,13 +138,13 @@ for j=1:nAOI
         end
         
         %%% store shortname
-        AOI.ShortName(j,1) = cellstr(['USHUC' num2str(numHUC)]);
+        AOI.ShortName(j,1) = cellstr(['HUC' num2str(numHUC)]);
         
 
     elseif curr_AOI==0
         % this is the US West domain
         AOI.LongName(j,1) = cellstr('Western US');
-        AOI.ShortName(j,1) = cellstr('USWEST');
+        AOI.ShortName(j,1) = cellstr('USwest');
         AOI.Type(j,1) = cellstr('region');
         
         %%% lat/lon limites

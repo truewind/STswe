@@ -10,7 +10,7 @@ path_root = fileparts(mfilename('fullpath'));
 path_ssh_key = fullfile(getenv('HOME'), '.ssh', 'id_rsa_snowToday');
 
 %%% specify the PL archive location for images
-path_PL_archive = '/pl/active/rittger_esp/SnowToday/SnowStations/image_archive_dev/';
+path_PL_archive = '/pl/active/rittger_esp/SnowToday/SnowStations/image_archive/';
 
 %%% these are in the STswe project
 path_data = fullfile(path_root, 'data');
