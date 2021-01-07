@@ -144,7 +144,7 @@ for j=1:nAOI
     
     %%% only generate map if stations found in this domain
     if isempty(a)==1
-        disp('... no map generated because no stations here'
+        disp('... no map generated because no stations here')
     else
         
         sLAT = SNOW.STA_LAT(a);
