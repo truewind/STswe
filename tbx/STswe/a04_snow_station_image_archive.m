@@ -30,7 +30,15 @@ if isempty(D)==0
 
         %%% move to archive
         path_dest = fullfile(path_PL_archive, ShortName);
-        movefile(fullfile(path_staging, iname), path_dest);
+        
+        try
+            movefile(fullfile(path_staging, iname), path_dest);
+        catch
+            % if no folder setup, then issue warning and delete the png
+            disp(['No destination setup at: ' path_dest])
+            disp('... deleting the .png')
+            delete(fullfile(path_staging, iname))
+        end
     end
     
 end
