@@ -131,73 +131,74 @@ for j=1:nAOI
     %%% subset to this area of interest
     a = find(SNOW.STA_LAT>=plot_lat_ll & SNOW.STA_LAT<=plot_lat_ul & SNOW.STA_LON >= plot_lon_ll & SNOW.STA_LON <= plot_lon_ul);
     
-    %%% only generate map if stations found in this domain
-    if isempty(a)==1
-        disp('... no map generated because no stations here')
+    
+    %% plot station locations
+    
+    %%% start a new figure
+    figure;
+    
+    %%% construct map. use conus as default
+    ax = usamap('conus');
+    
+    %%% set ax to invisible
+    set(ax, 'Visible', 'off')
+    
+    %%% specify projection and turn off grid
+    if strcmp(ShortName, 'USwest')==1
+        frame_opt='off';
     else
+        frame_opt='on';
+    end
+    axesm('MapProjection','utm','grid','off', 'frame', frame_opt)
+    
+    
+    %%% set lat/lon limits
+    setm(ax, 'MapLatLimit', [plot_lat_ll plot_lat_ul]);
+    setm(ax, 'MapLonLimit', [plot_lon_ll plot_lon_ul]);
+    
+    
+    %%% read shapefile and plot on map
+    states = shaperead('usastatehi','UseGeoCoords', true);
+    hstates=geoshow(ax, states, 'FaceColor', 'none');
+    set(hstates,'Clipping','on');
+    
+    %%% display the ecoregions to highlight mountain areas
+    ecoR = shaperead(path_shp_ecoregions);
+    oldField = 'X';
+    newField = 'Lon';
+    [ecoR.(newField)] = ecoR.(oldField);
+    ecoR = rmfield(ecoR,oldField);
+    oldField = 'Y';
+    newField = 'Lat';
+    [ecoR.(newField)] = ecoR.(oldField);
+    ecoR = rmfield(ecoR,oldField);
+    hEco=geoshow(ax, ecoR, 'FaceColor', [0.1 0.5 0.1], 'EdgeColor', 'none', 'facealpha',.3);
+    
+    
+    %%% plot red outline of the shapefile (state or HUC) to highlight
+    if strcmp(ShortName, 'USwest')~=1
+        
+        if strcmp(Type, 'state')==1
+            feat_lat = shp_states.S(shp_recNum).Y;
+            feat_lon = shp_states.S(shp_recNum).X;
+        elseif strcmp(Type, 'HUC02')==1
+            feat_lat = shp_huc02.S(shp_recNum).Y;
+            feat_lon = shp_huc02.S(shp_recNum).X;
+        end
+        geoshow(feat_lat, feat_lon, 'LineStyle', '-', 'Color', 'r', 'LineWidth', 1.5)
+    end
+    
+    
+    %%%  generate map if stations found in this domain... otherwise, text
+    hold on
+    
+    if isempty(a)==0
         
         sLAT = SNOW.STA_LAT(a);
         sLON = SNOW.STA_LON(a);
         pSWE = SNOW.dSWE_clr(a);
+
         
-        
-        %% plot station locations
-        
-        %%% start a new figure
-        figure;
-        
-        %%% construct map. use conus as default
-        ax = usamap('conus');
-        
-        %%% set ax to invisible
-        set(ax, 'Visible', 'off')
-        
-        %%% specify projection and turn off grid
-        if strcmp(ShortName, 'USwest')==1
-            frame_opt='off';
-        else
-            frame_opt='on';
-        end
-        axesm('MapProjection','utm','grid','off', 'frame', frame_opt)
-        
-        
-        %%% set lat/lon limits
-        setm(ax, 'MapLatLimit', [plot_lat_ll plot_lat_ul]);
-        setm(ax, 'MapLonLimit', [plot_lon_ll plot_lon_ul]);
-        
-        
-        %%% read shapefile and plot on map
-        states = shaperead('usastatehi','UseGeoCoords', true);
-        hstates=geoshow(ax, states, 'FaceColor', 'none');
-        set(hstates,'Clipping','on');
-        
-        %%% display the ecoregions to highlight mountain areas
-        ecoR = shaperead(path_shp_ecoregions);
-        oldField = 'X';
-        newField = 'Lon';
-        [ecoR.(newField)] = ecoR.(oldField);
-        ecoR = rmfield(ecoR,oldField);
-        oldField = 'Y';
-        newField = 'Lat';
-        [ecoR.(newField)] = ecoR.(oldField);
-        ecoR = rmfield(ecoR,oldField);
-        hEco=geoshow(ax, ecoR, 'FaceColor', [0.1 0.5 0.1], 'EdgeColor', 'none', 'facealpha',.3);
-        
-        
-        %%% plot red outline of the shapefile (state or HUC) to highlight
-        if strcmp(ShortName, 'USwest')~=1
-            
-            if strcmp(Type, 'state')==1
-                feat_lat = shp_states(shp_recNum).Y;
-                feat_lon = shp_states(shp_recNum).X;
-            elseif strcmp(Type, 'HUC02')==1
-                feat_lat = shp_huc02(shp_recNum).Y;
-                feat_lon = shp_huc02(shp_recNum).X;
-            end
-            geoshow(feat_lat, feat_lon, 'LineStyle', '-', 'Color', 'r', 'LineWidth', 1.5)
-        end
-        
-        hold on
         %%% loop through color bar and plot sites in each category
         for k=1:ncol
             
@@ -221,58 +222,62 @@ for j=1:nAOI
                 
             end
         end
-        
-        
-        %%% annotations
-        title({'Change in SWE (inches) in past 24 hours'; ['\rmPlot created: ' datestr(now, 'ddd mmm dd yyyy HH:MM PM') ' MT']; ['Data updated: ' datestr(datenum(iYR, iMO, iDA), 'ddd mmm dd yyyy HH:MM PM') ' MT']})
-        
-        
-        
-        colormap(cmap);
-        cb=colorbar('SouthOutside');
-        set(cb,'Xtick', linspace(0,1,numel(cbinLab)));
-        set(cb,'XtickLabel', cbinLab);
-        
-        
-        %     lgd=legend(hEco, 'mountains', 'Location', 'SouthOutside');
-        %     legend boxoff
-        %     lgd.FontSize = 8;
-        
-        
-        
-        
-        %% create png file
-        fig = gcf;
-        axis tight
-        
-        %%% the following is supposed to reduce white space around the figure
-        ax = gca;
-        outerpos = ax.OuterPosition;
-        ti = ax.TightInset;
-        left = outerpos(1) + ti(1);
-        bottom = outerpos(2) + ti(2);
-        ax_width = outerpos(3) - ti(1) - ti(3);
-        ax_height = outerpos(4) - ti(2) - ti(4);
-        ax.Position = [left bottom ax_width ax_height];
-        
-        
-        
-        
-        fig.PaperUnits = 'inches';
-        fig.PaperPosition = [0 0 5 5];
-        set(gcf, 'Renderer', 'zbuffer');
-        
-        
-        %%% now that the figure is sized, add ylabel-like text for LongName
-        xl=get(gca,'xlim');
-        yl = get(gca,'ylim');
-        ht=text( xl(1) -((xl(2)-xl(1))*0.05), yl(1) +((yl(2)-yl(1))*0.05), LongName);
-        set(ht,'Rotation',90);
-        
-        
-        cd(path_staging); % need to avoid  cd'ing... just write with full path
-        
-        print([datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_' ShortName  '_dSWE'],'-dpng','-r200')
-        cd(path_root);  % see above... change and remove this.
+    else
+        %%% no stations... plot text instead
+        textm(nanmean(feat_lat), nanmean(feat_lon), 'No SWE stations', 'HorizontalAlignment', 'center', 'FontSize', 10)
     end
+    
+    
+    %%% annotations
+    title({'Change in SWE (inches) in past 24 hours'; ['\rmPlot created: ' datestr(now, 'ddd mmm dd yyyy HH:MM PM') ' MT']; ['Data updated: ' datestr(datenum(iYR, iMO, iDA), 'ddd mmm dd yyyy HH:MM PM') ' MT']})
+    
+    
+    
+    colormap(cmap);
+    cb=colorbar('SouthOutside');
+    set(cb,'Xtick', linspace(0,1,numel(cbinLab)));
+    set(cb,'XtickLabel', cbinLab);
+    
+    
+    %     lgd=legend(hEco, 'mountains', 'Location', 'SouthOutside');
+    %     legend boxoff
+    %     lgd.FontSize = 8;
+    
+    
+    
+    
+    %% create png file
+    fig = gcf;
+    axis tight
+    
+    %%% the following is supposed to reduce white space around the figure
+    ax = gca;
+    outerpos = ax.OuterPosition;
+    ti = ax.TightInset;
+    left = outerpos(1) + ti(1);
+    bottom = outerpos(2) + ti(2);
+    ax_width = outerpos(3) - ti(1) - ti(3);
+    ax_height = outerpos(4) - ti(2) - ti(4);
+    ax.Position = [left bottom ax_width ax_height];
+    
+    
+    
+    
+    fig.PaperUnits = 'inches';
+    fig.PaperPosition = [0 0 5 5];
+    set(gcf, 'Renderer', 'zbuffer');
+    
+    
+    %%% now that the figure is sized, add ylabel-like text for LongName
+    xl=get(gca,'xlim');
+    yl = get(gca,'ylim');
+    ht=text( xl(1) -((xl(2)-xl(1))*0.05), yl(1) +((yl(2)-yl(1))*0.05), LongName);
+    set(ht,'Rotation',90);
+    
+    
+    cd(path_staging); % need to avoid  cd'ing... just write with full path
+    
+    print([datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_' ShortName  '_dSWE'],'-dpng','-r200')
+    cd(path_root);  % see above... change and remove this.
+    
 end

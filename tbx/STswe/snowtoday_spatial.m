@@ -12,9 +12,7 @@ snowtoday_settings;
 % shp_states = shaperead(path_shp_states);
 % shp_huc02 = shaperead(path_shp_huc02);
 shp_states = load(path_shp_states);
-shp_states = shp_states.S;
 shp_huc02 = load(path_shp_huc02);
-shp_huc02 = shp_huc02.S;
 
 tab_political = readtable(path_tab_political);
 tab_huc = readtable(path_tab_huc);
@@ -47,7 +45,8 @@ for j=1:nAOI
         curr_AOI=abs(curr_AOI);
         
         %%% find this state in the political table
-        a = find(tab_political.Var1==curr_AOI);
+        a = find(strcmp({shp_states.S.STATE_FIPS}.', num2str(curr_AOI,'%02.f'))==1);
+%         a = find(tab_political.Var1==curr_AOI);
         
         %%% determine whether it is a state or county. Assign the shortname
         %%% and longname
@@ -55,16 +54,16 @@ for j=1:nAOI
             AOI.Type(j) = cellstr('state');
             
             %%% get LongName and ShortName (state abbreviation)
-            AOI.LongName(j,1) = tab_political.Var2(a);
-            AOI.ShortName(j,1) = cellstr(['US' char(tab_political.Var3(a))]);
-            
+            AOI.LongName(j,1) = shp_states.LongName(a);
+            AOI.ShortName(j,1) = shp_states.ShortName(a);
+
             
             %%% get the lat/lon limits based on the shapefile
-            a = find(strcmp({shp_states.STATE}.', AOI.LongName(j,1))==1);
+            a = find(strcmp({shp_states.S.STATE}.', AOI.LongName(j,1))==1);
             
             %%% if found a match, get the bounding box
             if isempty(a)==0
-                BoundingBox = shp_states(a).BoundingBox;
+                BoundingBox = shp_states.S(a).BoundingBox;
                 
                 %%% lat/lon limits
                 AOI.lat_ul(j,1) = nanmax(BoundingBox(:,2));
@@ -79,14 +78,11 @@ for j=1:nAOI
         else
             AOI.Type(j) = cellstr('county');
             
-            %%% get LongName and ShortName (state abbreviation)
-            county_Long = [char(tab_political.Var2(a)) ', ' char(tab_political.Var3(a))];
-            county_Short = ['US' char(tab_political.Var3(a)) num2str(tab_political.Var1(a))];
-            AOI.LongName(j,1) = cellstr(county_Long);
-            AOI.ShortName(j,1) = cellstr(county_Short);
+   
+            error('need to code this in if/when we get a county shapefile')
             
             %%% 
-            error('need to code this in if/when we get a county shapefile')
+            
         end
         
         
@@ -95,23 +91,25 @@ for j=1:nAOI
     elseif curr_AOI>0
         % then this is a HUC
         
-        %%% find this state in the political table
-        a = find(tab_huc.Var1==curr_AOI);
+        %%% find this HUC02
+        huc_cellstr = {shp_huc02.S.huc2}.';
+        a = find(strcmp(huc_cellstr, num2str(curr_AOI,'%02.f'))==1);
+%         a = find(tab_huc.Var1==curr_AOI);
         
         %%% store long name
-        AOI.LongName(j,1) = cellstr([char(tab_huc.Var2(a)) ' (HUC code: ' num2str(tab_huc.Var1(a)) ')']);
+        AOI.LongName(j,1) = shp_huc02.LongName(a);
         
         %%% determine HUC level and get the lat/lon max and min
-        numHUC = tab_huc.Var1(a);
+        numHUC = str2double(char(huc_cellstr(a)));
         if numHUC<10^2
             AOI.Type(j) = cellstr('HUC02');
             
             %%% get the lat/lon limits based on the shapefile
-            a = find(strcmp({shp_huc02.huc2}.', num2str(numHUC))==1);
+            a = find(strcmp({shp_huc02.S.huc2}.', num2str(numHUC))==1);
             
             %%% if found a match, get the bounding box
             if isempty(a)==0
-                BoundingBox = shp_huc02(a).BoundingBox;
+                BoundingBox = shp_huc02.S(a).BoundingBox;
                 
                 %%% lat/lon limits
                 AOI.lat_ul(j,1) = nanmax(BoundingBox(:,2));
@@ -142,8 +140,7 @@ for j=1:nAOI
         end
         
         %%% store shortname
-        AOI.ShortName(j,1) = cellstr(['HUC' num2str(numHUC)]);
-        
+        AOI.ShortName(j,1) = shp_huc02.ShortName(a);
 
     elseif curr_AOI==0
         % this is the US West domain

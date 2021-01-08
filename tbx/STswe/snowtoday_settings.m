@@ -85,7 +85,7 @@ lon_buff = 0.05;  % buffer at left and right of plot (as fraction)
 latlon_aspRatio = 1.3; % target lat-lon aspect ratio for the maps
 
 %%% select area of interest (AOI), both political and hydrologic
-AOI_POLITICAL = [0 4 6 8 16 30 32 35 41 46 49 53 56];  % FIPS codes for state or county. 0 = USWEST
+AOI_POLITICAL = [0 4 6 8 16 30 31 32 35 41 46 49 53 56];  % FIPS codes for state or county. 0 = USWEST
 AOI_HYDRO = [10 11 12 13 14 15 16 17 18];   % HUC codes
 
 %%% cat into single AOI vector, and make political codes negative
