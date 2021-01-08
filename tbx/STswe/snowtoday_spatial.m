@@ -11,9 +11,9 @@ snowtoday_settings;
 %%% read each separately...  add more if we get other HUCs / counties
 % shp_states = shaperead(path_shp_states);
 % shp_huc02 = shaperead(path_shp_huc02);
-shp_states = load(path_mask_states);
+shp_states = load(path_shp_states);
 shp_states = shp_states.S;
-shp_huc02 = load(path_mask_huc02);
+shp_huc02 = load(path_shp_huc02);
 shp_huc02 = shp_huc02.S;
 
 tab_political = readtable(path_tab_political);
