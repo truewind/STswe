@@ -113,7 +113,7 @@ for j=1:nAOI
     plot_lon_ul = AOI.lon_ul(j);
     
     %%% expand upper/lower limits of lat/lon for buffer
-    if strcmp(ShortName, 'USWEST')~=1
+    if strcmp(ShortName, 'USwest')~=1
         range_lat = abs(plot_lat_ul - plot_lat_ll);
         range_lon = abs(plot_lon_ul - plot_lon_ll);
         plot_lat_ll = plot_lat_ll - (range_lat.*lat_buff);
@@ -164,7 +164,7 @@ for j=1:nAOI
         set(ax, 'Visible', 'off')
         
         %%% specify projection and turn off grid
-        if strcmp(ShortName, 'USWEST')==1
+        if strcmp(ShortName, 'USwest')==1
             frame_opt='off';
         else
             frame_opt='on';
@@ -195,7 +195,7 @@ for j=1:nAOI
         
         
         %%% plot red outline of the shapefile (state or HUC) to highlight
-        if strcmp(ShortName, 'USWEST')~=1
+        if strcmp(ShortName, 'USwest')~=1
             
             if strcmp(Type, 'state')==1
                 feat_lat = shp_states(shp_recNum).Y;
