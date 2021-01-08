@@ -1,6 +1,7 @@
 %%% this script loads the common settings
 
 %% paths
+addpath('/projects/raleighm/Snow-Today/operational/Matlab/functions');
 
 %%% specify root path for snow today operational files
 %%% as the location of this file
