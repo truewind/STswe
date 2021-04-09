@@ -58,6 +58,9 @@ QC.min_dSWE = 5;            % minimum absolute daily change in SWE (mm)
 
 %% plotting settings
 
+%%%
+create_figs = 0;    % enter 1 to generate figures, 0 to turn off
+
 %%% specify paths to shapefiles
 path_shp_states = fullfile(path_masks, 'State_masks.mat');
 path_shp_counties = '';
