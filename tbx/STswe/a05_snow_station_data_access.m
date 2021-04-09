@@ -12,7 +12,7 @@ snowtoday_settings;
 %%
 
 %%% look at files in the staging directory
-D = dir([fullfile(path_staging, '*.txt')]);
+D = dir([fullfile(path_staging, '*_SWEsummary.txt')]);
 
 %%% move to PL archive
 if isempty(D)==0
