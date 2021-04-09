@@ -38,6 +38,13 @@ end
 %%% get year, month, day
 [iYR, iMO, iDA, ~, ~, ~] = datevec(xSD);
 
+%%% current WY
+if iMO>=10
+    iWY = iYR+1;
+else
+    iWY = iYR;
+end
+
 %%% find this date in the record
 a = find(SNOW.TIME(:,year_col)==iYR & SNOW.TIME(:,month_col)==iMO & SNOW.TIME(:,day_col)==iDA);
 
@@ -281,9 +288,8 @@ for j=1:nAOI
     cd(path_root);  % see above... change and remove this.
     
     
-    %% create text file with summmary of data for this Area of Interest for current WY to date
-    
-    error('a')
-    
     
 end
+
+%% save temp file w/ today's dSWE data
+save('temp_dSWE.mat', 'dSWE', 'iYR', 'iMO', 'iDA')

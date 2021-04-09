@@ -68,7 +68,7 @@ SWE3 = round(100.*SWEc./SWE3);
 %%% convert current SWE to percent of median SWE
 SNOW.SWE_pnrm = SNOW.WTEQ_mm(end,:).*NaN;
 SNOW.SWE_pnrm(1,goodSites) = SWE3;   % percent of median normal SWE
-
+SWE_pnrm = SNOW.SWE_pnrm;
 
 
 %% plotting
@@ -280,3 +280,7 @@ for j=1:nAOI
     cd(path_root);
     
 end
+
+%% save temp file w/ today's climSWE data
+save('temp_climSWE.mat', 'SWE_pnrm', 'iYR', 'iMO', 'iDA')
+

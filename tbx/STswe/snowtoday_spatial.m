@@ -6,6 +6,12 @@
 
 snowtoday_settings;
 
+%% load snow station data (to append state and huc info)
+
+load(all_database);
+SNOW.STA_STATE = cell(1,numel(SNOW.STA_ID));
+SNOW.STA_HUC02 = cell(1,numel(SNOW.STA_ID));
+
 %% read shapefiles and tables
 
 %%% read each separately...  add more if we get other HUCs / counties
@@ -58,12 +64,15 @@ for j=1:nAOI
             AOI.ShortName(j,1) = shp_states.ShortName(a);
 
             
+            
             %%% get the lat/lon limits based on the shapefile
             a = find(strcmp({shp_states.S.STATE}.', AOI.LongName(j,1))==1);
             
             %%% if found a match, get the bounding box
             if isempty(a)==0
                 BoundingBox = shp_states.S(a).BoundingBox;
+                ShapeX = shp_states.S(a).X;
+                ShapeY = shp_states.S(a).Y;
                 
                 %%% lat/lon limits
                 AOI.lat_ul(j,1) = nanmax(BoundingBox(:,2));
@@ -72,6 +81,14 @@ for j=1:nAOI
                 AOI.lon_ll(j,1) = nanmin(BoundingBox(:,1));
                 
                 AOI.shp_recNum(j,1) = a;
+                
+                
+                %%% find stations within this state
+                [in,on]=inpolygon(SNOW.STA_LON, SNOW.STA_LAT, ShapeX, ShapeY);
+                in = find(in==1);
+                SNOW.STA_STATE(in) = AOI.ShortName(j,1);
+
+            
             end
             
 
@@ -99,6 +116,9 @@ for j=1:nAOI
         %%% store long name
         AOI.LongName(j,1) = shp_huc02.LongName(a);
         
+        %%% store shortname
+        AOI.ShortName(j,1) = shp_huc02.ShortName(a);
+        
         %%% determine HUC level and get the lat/lon max and min
         numHUC = str2double(char(huc_cellstr(a)));
         if numHUC<10^2
@@ -110,6 +130,8 @@ for j=1:nAOI
             %%% if found a match, get the bounding box
             if isempty(a)==0
                 BoundingBox = shp_huc02.S(a).BoundingBox;
+                ShapeX = shp_huc02.S(a).X;
+                ShapeY = shp_huc02.S(a).Y;
                 
                 %%% lat/lon limits
                 AOI.lat_ul(j,1) = nanmax(BoundingBox(:,2));
@@ -118,6 +140,11 @@ for j=1:nAOI
                 AOI.lon_ll(j,1) = nanmin(BoundingBox(:,1));
                 
                 AOI.shp_recNum(j,1) = a;
+                
+                %%% find stations within this huc02
+                [in,on]=inpolygon(SNOW.STA_LON, SNOW.STA_LAT, ShapeX, ShapeY);
+                in = find(in==1);
+                SNOW.STA_HUC02(in) = AOI.ShortName(j,1);
             end
             
         elseif numHUC<10^4
@@ -139,8 +166,7 @@ for j=1:nAOI
             error('unexpected HUC number')
         end
         
-        %%% store shortname
-        AOI.ShortName(j,1) = shp_huc02.ShortName(a);
+        
 
     elseif curr_AOI==0
         % this is the US West domain
@@ -168,3 +194,7 @@ AOI = AOI(a,:);
 
 %%% update nAOI
 nAOI = size(AOI,1);
+
+%%% update all snow database w/ states and hucs
+save(all_database, 'SNOW');
+
