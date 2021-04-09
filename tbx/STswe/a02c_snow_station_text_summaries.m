@@ -52,4 +52,9 @@ for j=1:numel(keepSTA)
     fprintf(fid, head_str, char(Name(j)), char(State(j)), Lat(j), Lon(j), Elev_m(j), climSWE(j), dSWE(j), H2);
 end
 fclose(fid);
+
+%% write file for each HUC and STATE, with dSWE stats and climSWE stats
+
+
+
  

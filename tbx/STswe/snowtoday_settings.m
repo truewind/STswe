@@ -13,6 +13,9 @@ path_ssh_key = fullfile(getenv('HOME'), '.ssh', 'id_rsa_snowToday');
 %%% specify the PL archive location for images
 path_PL_archive = '/pl/active/rittger_esp/SnowToday/SnowStations/image_archive/';
 
+%%% specify the PL root location for public data access
+path_PL_text_data = '/pl/active/rittger_esp_public/snow-today/';
+
 %%% these are in the STswe project
 path_data = fullfile(path_root, 'data');
 path_staging = fullfile(path_root, 'staging');
