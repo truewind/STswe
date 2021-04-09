@@ -280,4 +280,8 @@ for j=1:nAOI
     print([datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_' ShortName  '_dSWE'],'-dpng','-r200')
     cd(path_root);  % see above... change and remove this.
     
+    
+    %% create text file with summmary of data for this Area of Interest for current WY to date
+    
+    
 end
