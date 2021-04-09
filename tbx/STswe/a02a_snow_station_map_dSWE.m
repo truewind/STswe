@@ -283,7 +283,7 @@ for j=1:nAOI
     
     %% create text file with summmary of data for this Area of Interest for current WY to date
     
-    
+    error('a')
     
     
 end
