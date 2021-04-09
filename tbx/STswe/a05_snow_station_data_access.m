@@ -35,7 +35,7 @@ if isempty(D)==0
         end
         
         %%% move to archive
-        path_dest = fullfile(path_PL_archive, ['WY' num2str(iWY)], 'SWESummary');
+        path_dest = fullfile(path_PL_text_data, ['WY' num2str(iWY)], 'SWESummary');
         if exist(path_dest,'dir')==7
         else
             mkdir(path_dest);
@@ -46,7 +46,7 @@ if isempty(D)==0
         catch
             % if no folder setup, then issue warning and delete the png
             disp(['No destination setup at: ' path_dest])
-            disp('... deleting the .png')
+            disp('... deleting the .txt')
             delete(fullfile(path_staging, iname))
         end
     end
