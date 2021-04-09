@@ -43,8 +43,7 @@ filepath_SWEsummary = fullfile(path_staging, ['SnowToday_USwest_' YYYYMMDD '_SWE
 fid = fopen(filepath_SWEsummary, 'w');
 fprintf(fid,'%s\n', 'Name,State,Lat,Lon,Elev_m,climSWE,dSWE,HUC02');
 head_str = '%s,%s,%.4f,%.4f,%.1f,%.1f,%.1f,%s\n';
-for k=1:numel(keepSTA)
-    j = keepSTA(k);
+for j=1:numel(keepSTA)
     if isempty(HUC02{j})==0
         H2=char(HUC02(j));
     else
