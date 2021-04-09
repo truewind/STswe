@@ -45,7 +45,12 @@ fprintf(fid,'%s\n', 'Name,State,Lat,Lon,Elev_m,climSWE,dSWE,HUC02');
 head_str = '%s,%s,%.4f,%.4f,%.1f,%.1f,%.1f,%s\n';
 for k=1:numel(keepSTA)
     j = keepSTA(k);
-    fprintf(fid, head_str, char(Name(j)), char(State(j)), Lat(j), Lon(j), Elev_m(j), climSWE(j), dSWE(j), char(HUC02(j)));
+    if isempty(HUC02{j})==0
+        H2=char(HUC02(j));
+    else
+        H2='N/A';
+    end
+    fprintf(fid, head_str, char(Name(j)), char(State(j)), Lat(j), Lon(j), Elev_m(j), climSWE(j), dSWE(j), H2);
 end
 fclose(fid);
  
