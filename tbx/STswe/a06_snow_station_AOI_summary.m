@@ -110,7 +110,7 @@ if isempty(D)==0
         filepath_normSWE = fullfile(path_staging, ['SnowToday_' ShortName '_normSWE_WY' num2str(iWY) '_yearToDate.txt']);
         
         %%%write files (dSWE)
-        fid = fopen(filepath_dSWE);
+        fid = fopen(filepath_dSWE, 'w');
         fprintf(fid,'%s\n', head_str_dSWE);
         for j=1:nfiles
             fprintf(fid, col_fmt, squeeze(summary_dSWE(j,:,k)));
@@ -118,7 +118,7 @@ if isempty(D)==0
         fclose(fid);
         
         %%%write files (normSWE)
-        fid = fopen(filepath_normSWE);
+        fid = fopen(filepath_normSWE, 'w');
         fprintf(fid,'%s\n', head_str_normSWE);
         for j=1:nfiles
             fprintf(fid, col_fmt, squeeze(summary_normSWE(j,:,k)));
