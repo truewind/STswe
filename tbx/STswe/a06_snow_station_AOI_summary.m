@@ -50,7 +50,7 @@ if isempty(D)==0
         dowy = sdate-datenum(iWY-1,10,1)+1;
         
         %%% read the file as a table
-        fname = fullfil(path_dest, iname);
+        fname = fullfile(path_dest, iname);
         T = readtable(fname);
         State = table2cell(A(:,2));
         HUC02 = table2cell(A(:,8));
