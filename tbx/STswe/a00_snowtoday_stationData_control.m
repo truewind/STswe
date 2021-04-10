@@ -17,11 +17,17 @@ disp('  ... DONE!')
 disp('  .')
 
 %%% step 2a: generate plot for daily change in SWE (dSWE)
-disp('  Step 2: generating figures')
+disp('  Step 2: generating figures and text summary')
 a02a_snow_station_map_dSWE;
 
 %%% step 2b: generate plot for daily SWE percent of median
 a02b_snow_station_climSWE;
+disp('  ... DONE!')
+disp('  .')
+
+%%% step 2c: create daily summary of SWE variables at all stations in
+%%% single text file
+a02c_snow_station_text_summaries;
 disp('  ... DONE!')
 disp('  .')
 
@@ -36,3 +42,15 @@ disp('  Step 4: moving images to PetaLibrary')
 a04_snow_station_image_archive;
 disp('  ... DONE!')
 disp('  .')
+
+%%% step 5: move text summaries to PetaLibrary archive
+disp('  Step 5: moving text summaries to PetaLibrary')
+a05_snow_station_data_access;
+disp('  ... DONE!')
+disp('  .') 
+
+%%% step 6: write state/huc summaries to PL
+disp('  Step 6: writing year-to-date SWE summaries by state and HUC')
+a06_snow_station_AOI_summary;
+disp('  ... DONE!')
+disp('  .') 
