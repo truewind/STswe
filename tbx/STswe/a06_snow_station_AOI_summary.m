@@ -35,7 +35,7 @@ if isempty(D)==0
     
     %%% initialize
     summary_dSWE = nan(nfiles,7,nAOI);
-    summary_climSWE = nan(nfiles,7,nAOI);
+    summary_normSWE = nan(nfiles,7,nAOI);
     
     for j=1:nfiles
         %%% get current filename
@@ -74,7 +74,7 @@ if isempty(D)==0
             %%% build data matrices
             % day_of_water_year,min_dSWE,prc25_dSWE,median_dSWE,prc75_dSWE,max_dSWE,average_dSWE
             summary_dSWE(j,1,k) = dowy;
-            summary_climSWE(j,1,k) = dowy;
+            summary_normSWE(j,1,k) = dowy;
             if isempty(a)==0
                 summary_dSWE(j,2,k) = nanmin(dSWE(a));
                 summary_dSWE(j,3,k) = prctile(dSWE(a),25);
@@ -83,12 +83,12 @@ if isempty(D)==0
                 summary_dSWE(j,6,k) = nanmax(dSWE(a));
                 summary_dSWE(j,7,k) = nanmean(dSWE(a));
                 
-                summary_climSWE(j,2,k) = nanmin(normSWE(a));
-                summary_climSWE(j,3,k) = prctile(normSWE(a),25);
-                summary_climSWE(j,4,k) = prctile(normSWE(a),50);
-                summary_climSWE(j,5,k) = prctile(normSWE(a),75);
-                summary_climSWE(j,6,k) = nanmax(normSWE(a));
-                summary_climSWE(j,7,k) = nanmean(normSWE(a));
+                summary_normSWE(j,2,k) = nanmin(normSWE(a));
+                summary_normSWE(j,3,k) = prctile(normSWE(a),25);
+                summary_normSWE(j,4,k) = prctile(normSWE(a),50);
+                summary_normSWE(j,5,k) = prctile(normSWE(a),75);
+                summary_normSWE(j,6,k) = nanmax(normSWE(a));
+                summary_normSWE(j,7,k) = nanmean(normSWE(a));
             end
             
             
