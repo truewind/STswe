@@ -25,8 +25,16 @@ else
 end
 
 %%% look at daily files in the SWEsummary directory on 
-path_dest = fullfile(path_PL_text_data, ['WY' num2str(iWY)], 'SWESummary');
-D = dir([fullfile(path_dest, '*_SWEsummary.txt')]);
+path_summ = fullfile(path_PL_text_data, ['WY' num2str(iWY)], 'SWESummary');
+D = dir([fullfile(path_summ, '*_SWEsummary.txt')]);
+
+
+%%% path to PL archive
+path_dest = fullfile(path_PL_text_data, ['WY' num2str(iWY)], 'regionalSWEtoDate');
+if exist(path_dest,'dir')==7
+else
+    mkdir(path_dest);
+end
 
 %%
 
@@ -50,7 +58,7 @@ if isempty(D)==0
         dowy = sdate-datenum(iWY-1,10,1)+1;
         
         %%% read the file as a table
-        fname = fullfile(path_dest, iname);
+        fname = fullfile(path_summ, iname);
         T = readtable(fname);
         State = table2cell(T(:,2));
         HUC02 = table2cell(T(:,8));
@@ -109,10 +117,11 @@ if isempty(D)==0
     
     for k=1:nAOI
         ShortName = char(AOI.ShortName(k));
+
         
         %%% filenames
-        filepath_dSWE = fullfile(path_staging, ['SnowToday_' ShortName '_dSWE_WY' num2str(iWY) '_yearToDate.txt']);
-        filepath_normSWE = fullfile(path_staging, ['SnowToday_' ShortName '_normSWE_WY' num2str(iWY) '_yearToDate.txt']);
+        filepath_dSWE = fullfile(path_dest, ['SnowToday_' ShortName '_dSWE_WY' num2str(iWY) '_yearToDate.txt']);
+        filepath_normSWE = fullfile(path_dest, ['SnowToday_' ShortName '_normSWE_WY' num2str(iWY) '_yearToDate.txt']);
         
         %%%write files (dSWE)
         fid = fopen(filepath_dSWE, 'w');
