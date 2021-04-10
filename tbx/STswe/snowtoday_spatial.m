@@ -9,8 +9,13 @@ snowtoday_settings;
 %% load snow station data (to append state and huc info)
 
 load(all_database);
-SNOW.STA_STATE = cell(1,numel(SNOW.STA_ID));
-SNOW.STA_HUC02 = cell(1,numel(SNOW.STA_ID));
+if isfield(SNOW, 'STA_STATE') ==1 && isfield(SNOW, 'STA_HUC02') ==1
+    flag_names_huc_state = 1;
+else
+    flag_names_huc_state = 0;
+    SNOW.STA_STATE = cell(1,numel(SNOW.STA_ID));
+    SNOW.STA_HUC02 = cell(1,numel(SNOW.STA_ID));
+end
 
 %% read shapefiles and tables
 
@@ -84,10 +89,11 @@ for j=1:nAOI
                 
                 
                 %%% find stations within this state
-                [in,on]=inpolygon(SNOW.STA_LON, SNOW.STA_LAT, ShapeX, ShapeY);
-                in = find(in==1);
-                SNOW.STA_STATE(in) = AOI.ShortName(j,1);
-
+                if flag_names_huc_state==0
+                    [in,on]=inpolygon(SNOW.STA_LON, SNOW.STA_LAT, ShapeX, ShapeY);
+                    in = find(in==1);
+                    SNOW.STA_STATE(in) = AOI.ShortName(j,1);
+                end
             
             end
             
@@ -142,9 +148,11 @@ for j=1:nAOI
                 AOI.shp_recNum(j,1) = a;
                 
                 %%% find stations within this huc02
-                [in,on]=inpolygon(SNOW.STA_LON, SNOW.STA_LAT, ShapeX, ShapeY);
-                in = find(in==1);
-                SNOW.STA_HUC02(in) = AOI.ShortName(j,1);
+                if flag_names_huc_state==0
+                    [in,on]=inpolygon(SNOW.STA_LON, SNOW.STA_LAT, ShapeX, ShapeY);
+                    in = find(in==1);
+                    SNOW.STA_HUC02(in) = AOI.ShortName(j,1);
+                end
             end
             
         elseif numHUC<10^4
@@ -196,5 +204,7 @@ AOI = AOI(a,:);
 nAOI = size(AOI,1);
 
 %%% update all snow database w/ states and hucs
-save(all_database, 'SNOW');
+if flag_names_huc_state==0
+    save(all_database, 'SNOW');
+end
 
