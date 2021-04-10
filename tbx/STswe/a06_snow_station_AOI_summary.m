@@ -52,10 +52,10 @@ if isempty(D)==0
         %%% read the file as a table
         fname = fullfile(path_dest, iname);
         T = readtable(fname);
-        State = table2cell(A(:,2));
-        HUC02 = table2cell(A(:,8));
-        normSWE = A{:,6};
-        dSWE = A{:,7};
+        State = table2cell(T(:,2));
+        HUC02 = table2cell(T(:,8));
+        normSWE = T{:,6};
+        dSWE = T{:,7};
         
         for k=1:nAOI
             ShortName = char(AOI.ShortName(k));
