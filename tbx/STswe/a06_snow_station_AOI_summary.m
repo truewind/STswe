@@ -71,6 +71,11 @@ if isempty(D)==0
 %                 end
 %             end
             
+            if isempty(a)==1
+                % try HUC instead of state
+                a=find(strcmp(HUC02, ShortName)==1);
+            end
+            
             %%% build data matrices
             % day_of_water_year,min_dSWE,prc25_dSWE,median_dSWE,prc75_dSWE,max_dSWE,average_dSWE
             summary_dSWE(j,1,k) = dowy;
