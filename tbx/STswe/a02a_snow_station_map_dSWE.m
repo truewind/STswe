@@ -37,7 +37,6 @@ end
 
 %%% get year, month, day
 [iYR, iMO, iDA, ~, ~, ~] = datevec(xSD);
-
 %%% current WY
 if iMO>=10
     iWY = iYR+1;

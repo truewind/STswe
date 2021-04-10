@@ -37,7 +37,6 @@ end
 
 %%% get year, month, day
 [iYR, iMO, iDA, ~, ~, ~] = datevec(xSD);
-
 %%% find all rows in record with this month/day. set exception if leap year
 %%% (use Feb 28 instead).
 if iMO==2 && iDA==29
