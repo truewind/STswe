@@ -117,6 +117,7 @@ if isempty(D)==0
     
     for k=1:nAOI
         ShortName = char(AOI.ShortName(k));
+        LongName = char(AOI.LongName(k));
 
         
         %%% filenames
@@ -129,7 +130,15 @@ if isempty(D)==0
         for j=1:nfiles
             fprintf(fid, col_fmt, squeeze(summary_dSWE(j,:,k)));
         end
+        
+        fprintf(fid, '%s\n', ['SnowToday Daily Change in SWE To Date : ' datestr(datenum(iYR,iMO,iDA), 'yyyy-mm-dd')]);
+        fprintf(fid, '%s\n', 'Units : inches');
+        fprintf(fid, '%s\n', ['Water Year : ' num2str(iWY)]);
+        fprintf(fid, '%s\n', ['Water Year Begins : ' num2str(iWY-1) '-10-01']);
+        fprintf(fid, '%s\n', ['RegionName : ' LongName]);
+        fprintf(fid, '%s\n', ['RegionID : ' ShortName]);
         fclose(fid);
+        
         
         %%%write files (normSWE)
         fid = fopen(filepath_normSWE, 'w');
@@ -137,8 +146,15 @@ if isempty(D)==0
         for j=1:nfiles
             fprintf(fid, col_fmt, squeeze(summary_normSWE(j,:,k)));
         end
+        fprintf(fid, '%s\n', ['SnowToday Percent of Long-Term SWE To Date : ' datestr(datenum(iYR,iMO,iDA), 'yyyy-mm-dd')]);
+        fprintf(fid, '%s\n', 'Units : percent');
+        fprintf(fid, '%s\n', ['Water Year : ' num2str(iWY)]);
+        fprintf(fid, '%s\n', ['Water Year Begins : ' num2str(iWY-1) '-10-01']);
+        fprintf(fid, '%s\n', ['RegionName : ' LongName]);
+        fprintf(fid, '%s\n', ['RegionID : ' ShortName]);
         fclose(fid);
         
+
         
     end
 end

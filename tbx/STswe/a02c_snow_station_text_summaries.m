@@ -51,6 +51,17 @@ for j=1:numel(keepSTA)
     end
     fprintf(fid, head_str, char(Name(j)), char(State(j)), Lat(j), Lon(j), Elev_m(j), climSWE(j), dSWE(j), H2);
 end
+
+fprintf(fid, '%s\n', ['SnowToday Calculated SWE Summary Data : ' datestr(datenum(iYR,iMO,iDA), 'yyyy-mm-dd')]);
+fprintf(fid, '%s\n', 'Column01 : site name');
+fprintf(fid, '%s\n', 'Column02 : RegionID');
+fprintf(fid, '%s\n', 'Column03 : latitude');
+fprintf(fid, '%s\n', 'Column04 : longitude');
+fprintf(fid, '%s\n', 'Column05 : elevation');
+fprintf(fid, '%s\n', 'Column06 : percent of median long-term (25+yr) SWE');
+fprintf(fid, '%s\n', 'Column07 : daily change in SWE (inches)');
+fprintf(fid, '%s\n', 'Column08 : HUC02');
+
 fclose(fid);
 
 
