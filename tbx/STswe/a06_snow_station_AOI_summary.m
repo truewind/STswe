@@ -17,12 +17,14 @@ snowtoday_spatial;
 %%
 
 %%% get current WY
-[Y,M,~,~,~,~]=datevec(now);
+[Y,M,iDA,~,~,~]=datevec(now);
 if M>=10
     iWY = Y+1;
 else
     iWY = Y;
 end
+iYR = Y;
+iMO = M;
 
 %%% look at daily files in the SWEsummary directory on 
 path_summ = fullfile(path_PL_text_data, ['WY' num2str(iWY)], 'SWESummary');
