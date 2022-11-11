@@ -194,6 +194,9 @@ if create_figs==1
             elseif strcmp(Type, 'HUC02')==1
                 feat_lat = shp_huc02.S(shp_recNum).Y;
                 feat_lon = shp_huc02.S(shp_recNum).X;
+            elseif strcmp(Type, 'HUC04')==1
+                feat_lat = shp_huc04.S(shp_recNum).Y;
+                feat_lon = shp_huc04.S(shp_recNum).X;
             end
             geoshow(feat_lat, feat_lon, 'LineStyle', '-', 'Color', 'r', 'LineWidth', 1.5)
         end
