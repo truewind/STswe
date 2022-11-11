@@ -68,7 +68,7 @@ create_figs = 1;    % enter 1 to generate figures, 0 to turn off
 path_shp_states = fullfile(path_masks, 'State_masks.mat');
 path_shp_counties = '';
 path_shp_huc02 = fullfile(path_masks, 'HUC2_masks.mat');
-path_shp_huc04 = '';
+path_shp_huc04 = fullfile(path_masks, 'HUC4_masks.mat');
 path_shp_huc06 = '';
 path_shp_huc08 = '';
 
@@ -92,7 +92,9 @@ latlon_aspRatio = 1.3; % target lat-lon aspect ratio for the maps
 
 %%% select area of interest (AOI), both political and hydrologic
 AOI_POLITICAL = [0 4 6 8 16 30 31 32 35 41 46 49 53 56];  % FIPS codes for state or county. 0 = USWEST
-AOI_HYDRO = [10 11 13 14 15 16 17 18];   % HUC codes
+AOI_HYDRO = [10 11 13 14 15 16 17 18];   % HUC2 codes
+% cat the HUC04 into the HUC02: (apologies for the long list)
+AOI_HYDRO = [AOI_HYDRO,1806,1807,1809,1805,1810,1802,1808,1804,1803,1801,1702,1711,1703,1706,1705,1710,1701,1704,1712,1707,1708,1709,1604,1606,1605,1602,1601,1603,1507,1503,1506,1505,1508,1502,1501,1504,1406,1401,1402,1407,1403,1405,1408,1404,1307,1310,1304,1301,1302,1303,1306,1305,1211,1202,1201,1209,1207,1204,1210,1206,1208,1203,1205,1102,1103,1112,1113,1109,1108,1104,1110,1005,1014,1028,1020,1021,1022,1004,1009,1026,1023,1018,1025,1015,1012,1003,1010,1013,1016,1007,1008,1019,1027,1024,1002,1006,1011,1017];
 
 %%% cat into single AOI vector, and make political codes negative
 AOI.ID = [-1.*AOI_POLITICAL AOI_HYDRO];

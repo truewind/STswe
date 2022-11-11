@@ -9,12 +9,13 @@ snowtoday_settings;
 %% load snow station data (to append state and huc info)
 
 load(all_database);
-if isfield(SNOW, 'STA_STATE') ==1 && isfield(SNOW, 'STA_HUC02') ==1
+if isfield(SNOW, 'STA_STATE') ==1 && isfield(SNOW, 'STA_HUC02') ==1 && isfield(SNOW, 'STA_HUC04') ==1
     flag_names_huc_state = 1;
 else
     flag_names_huc_state = 0;
     SNOW.STA_STATE = cell(1,numel(SNOW.STA_ID));
     SNOW.STA_HUC02 = cell(1,numel(SNOW.STA_ID));
+    SNOW.STA_HUC04 = cell(1,numel(SNOW.STA_ID));  %%%% added Nov 2022
 end
 
 %% read shapefiles and tables
@@ -24,6 +25,7 @@ end
 % shp_huc02 = shaperead(path_shp_huc02);
 shp_states = load(path_shp_states);
 shp_huc02 = load(path_shp_huc02);
+shp_huc04 = load(path_shp_huc04);
 
 tab_political = readtable(path_tab_political);
 tab_huc = readtable(path_tab_huc);
@@ -117,7 +119,6 @@ for j=1:nAOI
         %%% find this HUC02
         huc_cellstr = {shp_huc02.S.huc2}.';
         a = find(strcmp(huc_cellstr, num2str(curr_AOI,'%02.f'))==1);
-%         a = find(tab_huc.Var1==curr_AOI);
         
         %%% store long name
         AOI.LongName(j,1) = shp_huc02.LongName(a);
@@ -135,6 +136,7 @@ for j=1:nAOI
             
             %%% if found a match, get the bounding box
             if isempty(a)==0
+                %%% HUC 02
                 BoundingBox = shp_huc02.S(a).BoundingBox;
                 ShapeX = shp_huc02.S(a).X;
                 ShapeY = shp_huc02.S(a).Y;
@@ -156,26 +158,50 @@ for j=1:nAOI
             end
             
         elseif numHUC<10^4
+            %%% HUC04
             AOI.Type(j) = cellstr('HUC04');
             
-            %%% 
-            error('need to code this in if/when we get a HUC04 shapefile')
+            %%% get the lat/lon limits based on the shapefile
+            a = find(strcmp({shp_huc04.S.huc4}.', num2str(numHUC))==1);
+            
+            %%% if found a match, get the bounding box
+            if isempty(a)==0
+                %%% HUC 04
+                BoundingBox = shp_huc04.S(a).BoundingBox;
+                ShapeX = shp_huc04.S(a).X;
+                ShapeY = shp_huc04.S(a).Y;
+                
+                %%% lat/lon limits
+                AOI.lat_ul(j,1) = nanmax(BoundingBox(:,2));
+                AOI.lat_ll(j,1) = nanmin(BoundingBox(:,2));
+                AOI.lon_ul(j,1) = nanmax(BoundingBox(:,1));
+                AOI.lon_ll(j,1) = nanmin(BoundingBox(:,1));
+                
+                AOI.shp_recNum(j,1) = a;
+                
+                %%% find stations within this huc04
+                if flag_names_huc_state==0
+                    [in,on]=inpolygon(SNOW.STA_LON, SNOW.STA_LAT, ShapeX, ShapeY);
+                    in = find(in==1);
+                    SNOW.STA_HUC04(in) = AOI.ShortName(j,1);
+                end
+            end
         elseif numHUC<10^6
             AOI.Type(j) = cellstr('HUC06');
             
-            %%% 
+            %%%
             error('need to code this in if/when we get a HUC06 shapefile')
         elseif numHUC<10^8
             AOI.Type(j) = cellstr('HUC08');
             
-            %%% 
+            %%%
             error('need to code this in if/when we get a HUC08 shapefile')
         else
             error('unexpected HUC number')
         end
         
         
-
+        
     elseif curr_AOI==0
         % this is the US West domain
         AOI.LongName(j,1) = cellstr('Western US');

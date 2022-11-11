@@ -59,6 +59,9 @@ dSWE(a) = 0;
 % convert dSWE from mm to inches for plotting purposes
 dSWE = mm2in(dSWE);
 
+% convert SWEc (current SWE) from mm to inches for consistency
+SWEc = mm2in(SWEc);
+
 % store the data (1 x nsta) in the structure. don't know why.
 SNOW.dSWE = dSWE;   % change in SWE
 
@@ -293,4 +296,4 @@ if create_figs==1
 end
 
 %% save temp file w/ today's dSWE data
-save('temp_dSWE.mat', 'dSWE', 'iYR', 'iMO', 'iDA')
+save('temp_dSWE.mat', 'dSWE', 'SWEc', 'iYR', 'iMO', 'iDA')
