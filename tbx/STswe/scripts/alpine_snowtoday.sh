@@ -1,8 +1,10 @@
 #!/bin/bash
-# Date: 2020-01-27
-# Purpose: This submits the snow-today matlab processing cron job on Summit
+# Date: 2022-09-21
+# Purpose: This submits the snow-today matlab processing cron job on Alpine
 
-#SBATCH --partition=shas
+#SBATCH --partition=amilan
+#SBATCH --qos=normal
+#SBATCH --account=ucb-general
 #SBATCH --time=02:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
