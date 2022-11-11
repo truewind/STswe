@@ -116,19 +116,21 @@ for j=1:nAOI
     elseif curr_AOI>0
         % then this is a HUC
         
-        %%% find this HUC02
-        huc_cellstr = {shp_huc02.S.huc2}.';
-        a = find(strcmp(huc_cellstr, num2str(curr_AOI,'%02.f'))==1);
         
-        %%% store long name
-        AOI.LongName(j,1) = shp_huc02.LongName(a);
-        
-        %%% store shortname
-        AOI.ShortName(j,1) = shp_huc02.ShortName(a);
-        
-        %%% determine HUC level and get the lat/lon max and min
-        numHUC = str2double(char(huc_cellstr(a)));
-        if numHUC<10^2
+        if curr_AOI<10^2
+            %%% find this HUC02
+            huc_cellstr = {shp_huc02.S.huc2}.';
+            a = find(strcmp(huc_cellstr, num2str(curr_AOI,'%02.f'))==1);
+            
+            %%% store long name
+            AOI.LongName(j,1) = shp_huc02.LongName(a);
+            
+            %%% store shortname
+            AOI.ShortName(j,1) = shp_huc02.ShortName(a);
+            
+            %%% determine HUC level and get the lat/lon max and min
+            numHUC = str2double(char(huc_cellstr(a)));
+            
             AOI.Type(j) = cellstr('HUC02');
             
             %%% get the lat/lon limits based on the shapefile
@@ -158,6 +160,19 @@ for j=1:nAOI
             end
             
         elseif numHUC<10^4
+            %%% find this HUC04
+            huc_cellstr = {shp_huc04.S.huc4}.';
+            a = find(strcmp(huc_cellstr, num2str(curr_AOI,'%02.f'))==1);
+            
+            %%% store long name
+            AOI.LongName(j,1) = shp_huc04.LongName(a);
+            
+            %%% store shortname
+            AOI.ShortName(j,1) = shp_huc04.ShortName(a);
+            
+            %%% determine HUC level and get the lat/lon max and min
+            numHUC = str2double(char(huc_cellstr(a)));
+            
             %%% HUC04
             AOI.Type(j) = cellstr('HUC04');
             
