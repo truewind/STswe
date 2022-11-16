@@ -53,7 +53,7 @@ fprintf(fid, '%s\n', 'Column04 : elevation');
 fprintf(fid, '%s\n', 'Column05 : SWE (inches)');
 fprintf(fid, '%s\n', 'Column06 : percent of median long-term (25+yr) SWE');
 fprintf(fid, '%s\n', 'Column07 : daily change in SWE (inches)');
-fprintf(fid, '%s\n', 'Column08 : RegionID');
+fprintf(fid, '%s\n', 'Column08 : State');
 fprintf(fid, '%s\n', 'Column09 : HUC02');
 fprintf(fid, '%s\n', 'Column10 : HUC04');
 
