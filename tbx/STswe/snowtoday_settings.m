@@ -16,6 +16,9 @@ path_PL_archive = '/pl/active/rittger_esp/SnowToday/SnowStations/image_archive/'
 %%% specify the PL root location for public data access
 path_PL_text_data = '/pl/active/rittger_esp_public/snow-today/';
 
+%%% specify the path on NuSnow for SWE
+path_nusnow_swe = '/share/apps/snow-today/incoming/snow-water-equivalent/';
+
 %%% these are in the STswe project
 path_data = fullfile(path_root, 'data');
 path_staging = fullfile(path_root, 'staging');

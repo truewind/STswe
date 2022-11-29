@@ -14,6 +14,9 @@ snowtoday_settings;
 %%% look at files in the staging directory
 D = dir([fullfile(path_staging, '*_SWEsummary.txt')]);
 
+%%% keep track of number of files transferred to nusnow
+files_transferred = 0;
+
 %%% move to PL archive
 if isempty(D)==0
     nfiles = size(D,1);
@@ -42,6 +45,13 @@ if isempty(D)==0
         end
         
         try
+            %%% transfer to nusnow via scp and using SSH key
+            system(['scp -i ' char(path_ssh_key) ' ' fullfile(path_staging, iname) ' snow_today@nusnow.colorado.edu:' path_nusnow_swe]);
+        
+            %%% add to tally of files transferred
+            files_transferred = files_transferred + 1;
+            
+            %%% archive to PL
             movefile(fullfile(path_staging, iname), path_dest);
         catch
             % if no folder setup, then issue warning and delete the png
@@ -52,3 +62,18 @@ if isempty(D)==0
     end
     
 end
+
+%%% if files were transferred to nusnow, create a TRIGGER file and transfer it too
+if files_transferred>0
+    %%% create trigger file
+    pathfile_trigger = fullfile(path_staging, 'TRIGGER'); % build string for filepath to TRIGGER
+    system(['touch ' char(pathfile_trigger)]);  % create the file with touch
+    
+    %%% transfer to nusnow via scp and using SSH key
+    system(['scp -i ' char(path_ssh_key) ' ' pathfile_trigger ' snow_today@nusnow.colorado.edu:' path_nusnow_swe]);
+    disp('.... transferred TRIGGER file to NuSnow')
+    
+    %%% delete the TRIGGER file
+    delete(pathfile_trigger);
+end
+

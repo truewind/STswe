@@ -44,7 +44,7 @@ disp('  ... DONE!')
 disp('  .')
 
 %%% step 5: move text summaries to PetaLibrary archive
-disp('  Step 5: moving text summaries to PetaLibrary')
+disp('  Step 5: transferring text summaries to NSIDC and archiving to PetaLibrary')
 a05_snow_station_data_access;
 disp('  ... DONE!')
 disp('  .') 
