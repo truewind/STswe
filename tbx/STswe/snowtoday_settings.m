@@ -14,7 +14,7 @@ path_ssh_key = fullfile(getenv('HOME'), '.ssh', 'id_rsa_snowToday');
 path_PL_archive = '/pl/active/rittger_esp/SnowToday/SnowStations/image_archive/';
 
 %%% specify the PL root location for public data access
-path_PL_text_data = '/pl/active/rittger_esp_public/snow-today/';
+path_PL_text_data = '/pl/active/rittger_public/snow-today/';
 
 %%% specify the path on NuSnow for SWE
 path_nusnow_swe = '/share/apps/snow-today/incoming/snow-water-equivalent/';
