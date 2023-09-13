@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<idinfo>
+		<descript>
+			<abstract>Ecoregions denote areas of general similarity in ecosystems and in the type, quality, and quantity of environmental resources. They are designed to serve as a spatial framework for the research, assessment, management, and monitoring of ecosystems and ecosystem components.&amp;nbsp;&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;These general purpose regions are critical for structuring and implementing ecosystem management strategies across federal agencies, state agencies, and nongovernment organizations that are responsible for different types of resources within the same geographical areas. The approach used to compile this map is based on the premise that ecological regions can be identified through the analysis of patterns of biotic and abiotic phenomena, including geology, physiography, vegetation, climate, soils, land use, wildlife, and hydrology. The relative importance of each characteristic varies from one ecological region to another. A Roman numeral hierarchical scheme has been adopted for different levels for ecological regions. Level I is the coarsest level, dividing North America into 15 ecological regions. Level II divides the continent into 52 regions (Commission for Environmental Cooperation Working Group, 1997). At Level III, the continental United States contains 104 regions whereas the conterminous United States has 84 (U.S. Environmental Protection Agency, 2005). Level IV ecoregions are further subdivisions of Level III ecoregions. Methods used to define the ecoregions are explained in Omernik (1995, 2004), Omernik and others (2000), and Gallant and others (1989).&lt;div&gt;&lt;br /&gt;&lt;/div&gt;&lt;/div&gt;</abstract>
+			<purpose>Ecoregion maps assist managers of aquatic and terrestrial resources to understand the regional patterns of the realistically attainable quality of these resources</purpose>
+			<supplinf>Electronic versions of ecoregion maps and posters, as well as other ecoregion resources are available at: http://www.epa.gov/wed/pages/ecoregions.htm.
+
+The fields ending with &amp;quot;KEY&amp;quot; are linked to style files containing color definitions for each level. L4_KEY and L3_KEY pertain to Ecoregions of the Continental United States, whereas L2_KEY and L1_Key relate to North American designations within the United States.
+
+This file differs from the previous version primarily in the addition of draft Level IV ecoregions of California, which may be subject to change. Some ecoregions along the California border in Oregon and Nevada were revised also. Except for the Great Lakes, waterbodies were merged with surrounding ecoregion polygons, especially along coastlines. A field called NA_L3NAME was added to be consistent with the North America data.
+
+Level IV ecoregions are not complete for Arizona, as of January, 2011. The Arizona polygons are for Level III only and the field &amp;quot;US_L4CODE&amp;quot; contains placeholder information derived from &amp;quot;US_L3CODE&amp;quot;. 
+
+Ecoregions were digitized at 1:250,000 scale and are intended for large geographic extents (i.e. states, multiple counties, or river basins). Use for smaller areas, such as individual counties or a 1:24,000 scale map boundary, is not recommended.</supplinf>
+		</descript>
+		<useconst>&lt;a rel="license" style="float:right;" href="http://creativecommons.org/licenses/by/3.0" target="_blank"&gt;&lt;img alt="Creative Commons License" style="border-width:0" src="http://creativecommons.org/images/public/somerights20.png" /&gt;&lt;/a&gt;This work is licensed under a  &lt;a rel="license" href="http://creativecommons.org/licenses/by/3.0" target="_blank"&gt;Creative Commons Attribution 3.0 License&lt;/a&gt;.</useconst>
+		<datacred/>
+		<citation>
+			<citeinfo>
+				<title>United States EPA Ecoregions of the U.S. - Level III</title>
+				<pubdate/>
+				<othercit>&amp;nbsp;Bryce, S.A., J.M. Omernik, and D.P. Larsen. 1999. Ecoregions - a geographic framework to guide risk characterization and ecosystem management: Environmental Practice 1(3):141-155.&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;Commission for Environmental Cooperation. 1997. Ecological regions of North America: toward a common perspective. Commission for Environmental Cooperation, Montreal, Quebec, Canada. 71p. Map (scale 1:12,500,000). Revised 2006.&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;Gallant, A.L., E.F. Binnian, J.M. Omernik, and M.B. Shasby. 1995. Ecoregions of Alaska. U.S. Geological Survey Professional Paper 1567. U.S. Government Printing Office, Washington D.C. 73p.&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;Griffith, G.E., S.B. Bryce, J.M. Omernik, and A. Rogers. 2007. Ecoregions of Texas. Texas Commission on Environmental Quality. Austin, TX. 125p.&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;Griffith, G.E., J.M. Omernik, C.M. Rohm, and S.M. Pierson. 1994. Florida regionalization project. EPA/600/Q-95/002. U.S. Environmental Protection Agency, Environmental Research Laboratory, Corvallis OR. 83p. &amp;nbsp;73 p.&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;Griffith, G.E., J.M. Omernik, T.F. Wilton, and S.M. Pierson. 1994. Ecoregions and subregions of Iowa: A framework for water quality assessment and management. The Journal of the Iowa Academy of Science 101(1):5-13.&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;McMahon, G., S.M. Gregonis, S.W. Waltman, J.M. Omernik, T.D. Thorson, J.A. Freeouf, A.H. Rorick, and J.E. Keys. 2001. Developing a spatial framework of common ecological regions for the conterminous United States. Environmental Management 28(3):293-316.&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;Omernik, J.M. 1987. Ecoregions of the conterminous United States. Map (scale 1:7,500,000). Annals of the Association of American Geographers 77(1):118-125.&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;Omernik, J.M. 1995. Ecoregions: A spatial framework for environmental management. In: Biological Assessment and Criteria: Tools for Water Resource Planning and Decision Making. Davis, W.S. and T.P. Simon (eds.), Lewis Publishers, Boca Raton, FL. p. 49-62.&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;Omernik, J.M., S.S. Chapman, R.A. Lillie, and R.T. Dumke. 2000. Ecoregions of Wisconsin. Transactions of the Wisconsin Acadamy of Sciences, Arts, and Letters 88:77-103.&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;Omernik, J.M. 2004. Perspectives on the nature and definition of ecological regions. Environmental Management 34(Supplement 1):S27-S38.&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;Wiken, E. 1986. Terrestrial ecozones of Canada. Environment Canada. Ecological Land Classification Series No. 19. Ottawa, Canada.&lt;/div&gt;</othercit>
+				<origin>US Environmental Protection Agency</origin>
+				<onlink>http://app.databasin.org/app/pages/datasetPage.jsp?id=ff7444d321c14e6da2e4ede30452798a</onlink>
+				<pubinfo>
+					<publish/>
+					<pubplace/>
+				</pubinfo>
+			</citeinfo>
+		</citation>
+		<ptcontac>
+			<cntinfo>
+				<cntperp>
+					<cntper>Marc Weber (weber.marc@epa.gov)</cntper>
+					<cntorg>U.S. Environmental Protection Agency, Office of Research &amp;amp; Development (ORD) - National Health and Environmental Effects Research Laboratory (NHEERL)&lt;div&gt;&lt;br /&gt;&lt;/div&gt;&lt;div&gt;Comments and questions regarding the Level III and IV Ecoregions should be addressed to Glenn Griffith, USGS, c/o US EPA., 200 SW 35th Street, Corvallis, OR 97333, (541)-754-4465, email:griffith.glenn@epa.gov Alternate: James Omernik, USGS, c/o US EPA, 200 SW 35th Street, Corvallis, OR 97333, (541)-754-4458, email:omernik.james@epa.gov&lt;/div&gt;</cntorg>
+				</cntperp>
+			</cntinfo>
+		</ptcontac>
+		<status>
+			<progress/>
+			<update/>
+		</status>
+		<timeperd>
+			<timeinfo>
+				<sngdate/>
+				<current/>
+			</timeinfo>
+		</timeperd>
+		<keywords/>
+		<spdom>
+			<bounding>
+				<northbc>52.736829570804176</northbc>
+				<eastbc>-62.21870310795367</eastbc>
+				<southbc>21.186004808459792</southbc>
+				<westbc>-131.0138203968558</westbc>
+			</bounding>
+		</spdom>
+	</idinfo>
+	<dataqual>
+		<attracc>
+			<attraccr/>
+		</attracc>
+		<complete>Level IV ecoregions are not complete for California and Arizona, as of May, 2010.  For these states, the polygons are for Level III or lower.  The field 'US_L4CODE&amp;quot; contains placeholder information derived from &amp;quot;US_L3CODE&amp;quot;.  Ecoregions were digitized at 1:250,000 scale and are intended for large geographic extents (i.e. states, multiple counties, or river basins).  Use for smaller areas, such as individual counties or a 1:24,000 scale map boundary, is not recommended.</complete>
+		<lineage>
+			<procstep>
+				<procdesc>Consolidated Data Basin Info: 1) U.S.G.S. 1:250,000 topographic maps are used to delineate the ecoregions. The lines drawn are manually digitized or scanned to produce georeferenced electronic files.&amp;nbsp;&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;2) All base maps are joined together and errors along the edges are resolved.&amp;nbsp;&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;3) Topology is established and the maps are reviewed for accuracy, completeness, and conformity with the original lines. Corrections are made as needed and topology regenerated.&amp;nbsp;&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;4) Attributes are added.&amp;nbsp;&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;5) Maps are plotted for visual inspection by two individuals and necessary changes made.&amp;nbsp;&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;6) Ecoregions from all available states are merged and dissolved to identify and correct inconsistencies.&amp;nbsp;&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;7) Polygons of the corrected seamless ecoregion features are extended beyond the coastal borders.&amp;nbsp;&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;&amp;nbsp;8) State and Ecoregion datasets are intersected.&amp;nbsp;&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;9) Topology errors removed.&amp;nbsp;&lt;/div&gt;
+
+&lt;div&gt;&lt;br /&gt;&lt;/div&gt;
+
+&lt;div&gt;10) Final QA&lt;br /&gt;&lt;br /&gt;&lt;/div&gt;</procdesc>
+			</procstep>
+		</lineage>
+	</dataqual>
+	<eainfo>
+		<detailed Name="WUS_AK_mtns">
+			<attr>
+				<attrlabl>FID</attrlabl>
+				<attalias>FID</attalias>
+				<attrdef>Internal feature number.</attrdef>
+				<attrdomv><udom Sync="TRUE">Sequential unique whole numbers that are automatically generated.</udom></attrdomv>
+				<attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdefs Sync="TRUE">Esri</attrdefs></attr>
+			<attr>
+				<attrlabl>Shape</attrlabl>
+				<attalias>Shape</attalias>
+				<attrdef>Feature geometry.</attrdef>
+				<attrdomv><udom Sync="TRUE">Coordinates defining the features.</udom></attrdomv>
+				<attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdefs Sync="TRUE">Esri</attrdefs></attr>
+			<attr>
+				<attrlabl>US_L3NAME</attrlabl>
+				<attalias>US_L3NAME</attalias>
+				<attrdef>Name for Level III Ecoregion (US)</attrdef>
+				<attrdomv/>
+				<attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<enttyp><enttypl Sync="TRUE">WUS_AK_mtns</enttypl><enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">0</enttypc></enttyp><attr><attrlabl Sync="TRUE">NA_L3CODE</attrlabl><attalias Sync="TRUE">NA_L3CODE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">20</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">NA_L3NAME</attrlabl><attalias Sync="TRUE">NA_L3NAME</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">NA_L2CODE</attrlabl><attalias Sync="TRUE">NA_L2CODE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">20</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">NA_L2NAME</attrlabl><attalias Sync="TRUE">NA_L2NAME</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">NA_L1CODE</attrlabl><attalias Sync="TRUE">NA_L1CODE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">20</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">NA_L1NAME</attrlabl><attalias Sync="TRUE">NA_L1NAME</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">NA_L3KEY</attrlabl><attalias Sync="TRUE">NA_L3KEY</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">125</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">NA_L2KEY</attrlabl><attalias Sync="TRUE">NA_L2KEY</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">125</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">NA_L1KEY</attrlabl><attalias Sync="TRUE">NA_L1KEY</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">125</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">Shape_Leng</attrlabl><attalias Sync="TRUE">Shape_Leng</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">19</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">Shape_Area</attrlabl><attalias Sync="TRUE">Shape_Area</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">19</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale><attrdef Sync="TRUE">Area of feature in internal units squared.</attrdef><attrdefs Sync="TRUE">Esri</attrdefs><attrdomv><udom Sync="TRUE">Positive real numbers that are automatically generated.</udom></attrdomv></attr></detailed>
+	</eainfo>
+	<distinfo>
+		<resdesc>United States EPA Ecoregions of the U.S. - Level III</resdesc>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Data Basin (www.databasin.org)</cntorg>
+				</cntorgp>
+				<cntemail>databasin@consbio.org</cntemail>
+				<cntorgp/>
+			</cntinfo>
+			<cntinfo/>
+			<cntinfo/>
+		</distrib>
+		<stdorder>
+			<digform>
+				<digtopt>
+					<onlinopt>
+						<computer>
+							<networka>
+								<networkr>http://app.databasin.org/app/pages/datasetPage.jsp?id=ff7444d321c14e6da2e4ede30452798a</networkr>
+							</networka>
+						</computer>
+					</onlinopt>
+				</digtopt>
+			</digform>
+		</stdorder>
+	</distinfo>
+	<Esri><CreaDate>20230913</CreaDate><CreaTime>00323300</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>FALSE</SyncOnce><DataProperties><itemProps><itemLocation><linkage Sync="TRUE">file://\\QUANDARY\C$\Users\Mark Raleigh\Scratch\WUS_AK_mtns.shp</linkage><protocol Sync="TRUE">Local Area Network</protocol></itemLocation><itemName Sync="TRUE">WUS_AK_mtns</itemName><imsContentType Sync="TRUE">002</imsContentType><itemSize Sync="TRUE">0.000</itemSize></itemProps><copyHistory><copy source="D:\arcgisserver\services\im2\ff7444d321c14e6da2e4ede30452798a\commondata\data0\Eco_Level_III_US" dest="\\IP-0A52DB84\D\arcgisserver\services\im2\ff7444d321c14e6da2e4ede30452798a\ff7444d321c14e6da2e4ede30452798a\commondata\data0\Eco_Level_III_US" date="20110719" time="18140400"></copy></copyHistory><coordRef><type Sync="TRUE">Geographic</type><geogcsn Sync="TRUE">GCS_WGS_1984</geogcsn><csUnits Sync="TRUE">Angular Unit: Degree (0.017453)</csUnits><peXml Sync="TRUE">&lt;GeographicCoordinateSystem xsi:type='typens:GeographicCoordinateSystem' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xs='http://www.w3.org/2001/XMLSchema' xmlns:typens='http://www.esri.com/schemas/ArcGIS/10.8'&gt;&lt;WKT&gt;GEOGCS[&amp;quot;GCS_WGS_1984&amp;quot;,DATUM[&amp;quot;D_WGS_1984&amp;quot;,SPHEROID[&amp;quot;WGS_1984&amp;quot;,6378137.0,298.257223563]],PRIMEM[&amp;quot;Greenwich&amp;quot;,0.0],UNIT[&amp;quot;Degree&amp;quot;,0.0174532925199433],AUTHORITY[&amp;quot;EPSG&amp;quot;,4326]]&lt;/WKT&gt;&lt;XOrigin&gt;-400&lt;/XOrigin&gt;&lt;YOrigin&gt;-400&lt;/YOrigin&gt;&lt;XYScale&gt;11258999068426.238&lt;/XYScale&gt;&lt;ZOrigin&gt;-100000&lt;/ZOrigin&gt;&lt;ZScale&gt;10000&lt;/ZScale&gt;&lt;MOrigin&gt;-100000&lt;/MOrigin&gt;&lt;MScale&gt;10000&lt;/MScale&gt;&lt;XYTolerance&gt;8.983152841195215e-09&lt;/XYTolerance&gt;&lt;ZTolerance&gt;0.001&lt;/ZTolerance&gt;&lt;MTolerance&gt;0.001&lt;/MTolerance&gt;&lt;HighPrecision&gt;true&lt;/HighPrecision&gt;&lt;LeftLongitude&gt;-180&lt;/LeftLongitude&gt;&lt;WKID&gt;4326&lt;/WKID&gt;&lt;LatestWKID&gt;4326&lt;/LatestWKID&gt;&lt;/GeographicCoordinateSystem&gt;</peXml></coordRef><lineage><Process ToolSource="c:\program files (x86)\arcgis\desktop10.6\ArcToolbox\Toolboxes\Data Management Tools.tbx\Dissolve" Date="20210413" Time="141651">Dissolve "United States EPA Ecoregions of the U.S. _ Level III" "C:\Users\Mark Raleigh\Scratch\epa_diss.shp" US_L3NAME # MULTI_PART DISSOLVE_LINES</Process><Process ToolSource="c:\program files (x86)\arcgis\desktop10.6\ArcToolbox\Toolboxes\Data Management Tools.tbx\Project" Date="20210413" Time="142156">Project epa_diss2 "C:\Users\Mark Raleigh\Google Drive\Research\GIS\Ecology\EPA_Ecoregions_Level3\westUSA_mtns2.shp" GEOGCS['GCS_WGS_1984',DATUM['D_WGS_1984',SPHEROID['WGS_1984',6378137.0,298.257223563]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]] WGS_1984_(ITRF00)_To_NAD_1983 PROJCS['USA_Contiguous_Albers_Equal_Area_Conic_USGS_version',GEOGCS['GCS_North_American_1983',DATUM['D_North_American_1983',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Albers'],PARAMETER['False_Easting',0.0],PARAMETER['False_Northing',0.0],PARAMETER['Central_Meridian',-96.0],PARAMETER['Standard_Parallel_1',29.5],PARAMETER['Standard_Parallel_2',45.5],PARAMETER['Latitude_Of_Origin',23.0],UNIT['Meter',1.0]] PRESERVE_SHAPE # NO_VERTICAL</Process><Process ToolSource="c:\program files (x86)\arcgis\desktop10.8\ArcToolbox\Toolboxes\Data Management Tools.tbx\Merge" Date="20230913" Time="002847">Merge westUSA_mtns2;AK_mtns_gcs "C:\Users\Mark Raleigh\Scratch\WUS_AK_mtns.shp" "US_L3NAME "US_L3NAME" true true false 100 Text 0 0 ,First,#,westUSA_mtns2,US_L3NAME,-1,-1;NA_L3CODE "NA_L3CODE" true true false 20 Text 0 0 ,First,#,AK_mtns_gcs,NA_L3CODE,-1,-1;NA_L3NAME "NA_L3NAME" true true false 100 Text 0 0 ,First,#,AK_mtns_gcs,NA_L3NAME,-1,-1;NA_L2CODE "NA_L2CODE" true true false 20 Text 0 0 ,First,#,AK_mtns_gcs,NA_L2CODE,-1,-1;NA_L2NAME "NA_L2NAME" true true false 100 Text 0 0 ,First,#,AK_mtns_gcs,NA_L2NAME,-1,-1;NA_L1CODE "NA_L1CODE" true true false 20 Text 0 0 ,First,#,AK_mtns_gcs,NA_L1CODE,-1,-1;NA_L1NAME "NA_L1NAME" true true false 100 Text 0 0 ,First,#,AK_mtns_gcs,NA_L1NAME,-1,-1;NA_L3KEY "NA_L3KEY" true true false 125 Text 0 0 ,First,#,AK_mtns_gcs,NA_L3KEY,-1,-1;NA_L2KEY "NA_L2KEY" true true false 125 Text 0 0 ,First,#,AK_mtns_gcs,NA_L2KEY,-1,-1;NA_L1KEY "NA_L1KEY" true true false 125 Text 0 0 ,First,#,AK_mtns_gcs,NA_L1KEY,-1,-1;Shape_Leng "Shape_Leng" true true false 19 Double 0 0 ,First,#,AK_mtns_gcs,Shape_Leng,-1,-1;Shape_Area "Shape_Area" true true false 19 Double 0 0 ,First,#,AK_mtns_gcs,Shape_Area,-1,-1"</Process></lineage></DataProperties><SyncDate>20230913</SyncDate><SyncTime>00284600</SyncTime><ModDate>20230913</ModDate><ModTime>00284600</ModTime></Esri><dataIdInfo><envirDesc Sync="TRUE"> Version 6.2 (Build 9200) ; Esri ArcGIS 10.8.1.14362</envirDesc><dataLang><languageCode value="eng" Sync="TRUE"></languageCode><countryCode value="USA" Sync="TRUE"></countryCode></dataLang><idCitation><resTitle Sync="TRUE">WUS_AK_mtns</resTitle><presForm><PresFormCd value="005" Sync="TRUE"></PresFormCd></presForm></idCitation><spatRpType><SpatRepTypCd value="001" Sync="TRUE"></SpatRepTypCd></spatRpType></dataIdInfo><mdLang><languageCode value="eng" Sync="TRUE"></languageCode><countryCode value="USA" Sync="TRUE"></countryCode></mdLang><mdChar><CharSetCd value="004" Sync="TRUE"></CharSetCd></mdChar><distInfo><distFormat><formatName Sync="TRUE">Shapefile</formatName></distFormat><distTranOps><transSize Sync="TRUE">0.000</transSize></distTranOps></distInfo><mdHrLv><ScopeCd value="005" Sync="TRUE"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><refSysInfo><RefSystem><refSysID><identCode code="4326" Sync="TRUE"></identCode><idCodeSpace Sync="TRUE">EPSG</idCodeSpace><idVersion Sync="TRUE">6.14(3.0.1)</idVersion></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><geometObjs Name="WUS_AK_mtns"><geoObjTyp><GeoObjTypCd value="002" Sync="TRUE"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">0</geoObjCnt></geometObjs><topLvl><TopoLevCd value="001" Sync="TRUE"></TopoLevCd></topLvl></VectSpatRep></spatRepInfo><spdoinfo><ptvctinf><esriterm Name="WUS_AK_mtns"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom code="4" Sync="TRUE"></efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">0</efeacnt><spindex Sync="TRUE">FALSE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf></spdoinfo><mdDateSt Sync="TRUE">20230913</mdDateSt></metadata>

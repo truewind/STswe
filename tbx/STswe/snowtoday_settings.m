@@ -85,7 +85,7 @@ path_shp_huc04 = fullfile(path_masks, 'HUC4_masks.mat');
 path_shp_huc06 = '';
 path_shp_huc08 = '';
 
-path_shp_ecoregions = fullfile(path_data, 'Ecoregions', 'westUSA_mtns2.shp');
+path_shp_ecoregions = fullfile(path_data, 'Ecoregions', 'westUSA_mtns3.shp');
 
 %%% specify paths to tables defining numbers/names of political boundaries
 %%% (States, counties) and HUCs (2-8)

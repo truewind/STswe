@@ -16,7 +16,7 @@ load(all_database);
 
 %%% current date (now)
 xSD = floor(now);
-% xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
+%xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
 
 %%% check to make sure we have enough stations reporting data on this date. if not, move
 %%% backwards in time until satisfied

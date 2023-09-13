@@ -6,9 +6,6 @@ close all;
 %%% load settings
 snowtoday_settings;
 
-%%% setup the spatial settings based on Areas of Interest
-snowtoday_spatial;
-
 %%
 
 %%% look for .png image files in the staging directory
