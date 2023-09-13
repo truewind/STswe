@@ -1,7 +1,17 @@
-%%% this script loads the common settings
+% snowtoday_settings.m
+
+% This script is a configuration file with the settings for running the
+% Snow Today code for SWE stations. This script should be configured upon
+% first usage, and updated as needed. Settings include paths, and various
+% settings related to download, data format, data QC, and plotting.
+%
+% Code written by Mark Raleigh (raleigma@oregonstate.edu)
+
 
 %% paths
-addpath('./functions');
+%%% add path to the folder than includes various functions used in the code
+path_functions = './functions';
+addpath(path_functions);
 
 %%% specify root path for snow today operational files
 %%% as the location of this file

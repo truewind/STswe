@@ -1,12 +1,8 @@
 % a01a_snow_station_data_download.m
 clear; close all; 
 
-% This script is the master control script that is invoked with the
-% scrontab job for SWE station data on Snow Today.
-% It sequentially executes a series of scripts that download
-% the latest SWE station data, does basic quality control (QC), generates
-% figures and text summaries, and transfers copies of these files to other
-% locations (e.g., Petalibary archive, NSIDC nusnow
+% This script downloads SWE data from the NRCS and CDWR networks and then
+% merges them into a single database
 %
 % Code written by Mark Raleigh (raleigma@oregonstate.edu)
 
