@@ -1,7 +1,13 @@
-%a00_snowtoday_stationData_control - master control script
+%a00_snowtoday_stationData_control
 clear;
 clc;
 close all;
+
+% This script is the master control script that is invoked with the
+% scrontab job. It sequentially executes a series of scripts that download
+% the latest SWE station data, does basic quality control (QC), generates
+% figures and text summaries, and transfers copies of these files to other
+% locations (e.g., Petalibary archive, NSIDC nusnow
 
 %% Snow pillows
 
