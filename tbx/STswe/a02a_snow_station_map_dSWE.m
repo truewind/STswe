@@ -16,6 +16,7 @@ load(all_database);
 
 %%% current date (now)
 xSD = floor(now);
+% xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
 
 %%% check to make sure we have enough stations reporting data on this date.
 %%% if not, move backwards in time until satisfied
@@ -147,9 +148,13 @@ if create_figs==1
         %%% start a new figure
         figure;
         
-        %%% construct map. use conus as default
-        ax = usamap('conus');
-        
+        %%% construct map. use conus as default if not alaska
+        if plot_lat_ul>70
+            ax = usamap('alaska');
+        else
+            ax = usamap('conus');
+        end
+
         %%% set ax to invisible
         set(ax, 'Visible', 'off')
         
