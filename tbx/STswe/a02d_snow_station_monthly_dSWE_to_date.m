@@ -27,8 +27,8 @@ max_missing = 5;
 
 %% setup date
 %%% current date (now)
-% xSD = floor(now);
-xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
+xSD = floor(now);
+%xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
 
 %%% get the current year, month, and day to review
 [r_year,r_month,r_day,~,~,~] = datevec(xSD);
