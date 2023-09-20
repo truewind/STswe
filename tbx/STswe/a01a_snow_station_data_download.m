@@ -14,12 +14,13 @@ snowtoday_settings;
 
 %% check for latest NRCS, CDWR SWE data. download and update databases
 
-flag_update= [0 0];  % set flags to keep track of whether new data are downloaded (1=yes, 0=no)
+flag_update= [0 0 0];  % set flags to keep track of whether new data are downloaded (1=yes, 0=no)
 
-%%% loop through the two networks
-for j=1:2
+%%% loop through the networks
+for j=1:3
     % j=1 NRCS SNOTEL
     % j=2 CDWR snow pillow
+    % j=3 Canada (BC) snow pillows
     
     if j==1
         IMPORT_OPTS.SITES = {'SNTL'};
@@ -29,6 +30,11 @@ for j=1:2
         IMPORT_OPTS.SITES = {'ALL'};
         IMPORT_OPTS.OBS = 82;  % 82=Snow, water content (Revised)
         name_database = cdwr_database;
+    elseif j==3
+        IMPORT_OPTS.SITES = 'SNOW';         % select SNOTEL network
+        IMPORT_OPTS.STATEPROV = 'BC';       % select a specific state (optional)
+        IMPORT_OPTS.OBS = {'WTEQ'};         % select variables
+        name_database = canada_database;
     end
     
     
@@ -38,7 +44,7 @@ for j=1:2
         
         %%% store a copy of the data, to make it the same regardless of
         %%% network
-        if j==1
+        if j==1 || j==3
             SNOW=NRCS;
         elseif j==2
             SNOW=CDWR;
@@ -79,8 +85,8 @@ for j=1:2
             end
             
             %%% import the latest data
-            if j==1
-                SNOW2 = import_nrcs_working(IMPORT_OPTS);
+            if j==1 || j==3
+                SNOW2 = import_nrcs(IMPORT_OPTS);
             elseif j==2
                 SNOW2 = import_cdwr(IMPORT_OPTS);
             end
@@ -99,6 +105,9 @@ for j=1:2
             elseif j==2
                 CDWR = SNOW;
                 save(name_database, 'CDWR');
+            elseif j==3
+                CA_SNOW = SNOW;
+                save(name_database, 'CA_SNOW');
             end
             
         else
@@ -113,11 +122,14 @@ for j=1:2
         
         %%% download and save
         if j==1
-            NRCS = import_nrcs_working(IMPORT_OPTS);
+            NRCS = import_nrcs(IMPORT_OPTS);
             save(name_database, 'NRCS');
         elseif j==2
             CDWR = import_cdwr(IMPORT_OPTS);
             save(name_database, 'CDWR');
+        elseif j==3
+            CA_SNOW = import_nrcs(IMPORT_OPTS);
+            save(name_database, 'CA_SNOW');
         end
         flag_update(j)=1;
         
@@ -126,24 +138,26 @@ for j=1:2
     clear SNOW
 end
 
-%% merge NRCS and CDWR into a single structure (the ALL database)
+%% merge all networks into a single structure (the ALL database)
 
 if exist(all_database, 'file')~=2 || nanmax(flag_update)==1
-    disp(' ... merging NRCS and CDWR into single database')
+    disp(' ... merging NRCS, CDWR, and Canadian snow pillows into single database')
     
-    %%% load the two databases
+    %%% load the databases
     load(nrcs_database)
     load(cdwr_database)
+    load(canada_database)
     
     %%% build the merged dataset manually
-    t1 = nanmin([NRCS.TIME(:,sdate_col); CDWR.TIME(:,sdate_col)]);
-    t2 = nanmax([NRCS.TIME(:,sdate_col); CDWR.TIME(:,sdate_col)]);
+    t1 = nanmin([NRCS.TIME(:,sdate_col); CDWR.TIME(:,sdate_col); CA_SNOW.TIME(:,sdate_col)]);
+    t2 = nanmax([NRCS.TIME(:,sdate_col); CDWR.TIME(:,sdate_col); CA_SNOW.TIME(:,sdate_col)]);
     SNOW.TIME = time_builder((t1:1:t2)'); % need to change to be flexible to timestep!
     ntime = size(SNOW.TIME,1);
     
     nsta_nrcs = size(NRCS.WTEQ_mm,2);
     nsta_cdwr = size(CDWR.WTEQ_mm,2);
-    nsta = nsta_nrcs+nsta_cdwr;
+    nsta_canada = size(CA_SNOW.WTEQ_mm,2);
+    nsta = nsta_nrcs+nsta_cdwr+nsta_canada;
     
     SNOW.WTEQ_mm = nan(ntime,nsta);
     SNOW.STA_LON = nan(1,nsta);
@@ -152,6 +166,7 @@ if exist(all_database, 'file')~=2 || nanmax(flag_update)==1
     SNOW.STA_NAME = cell(1,nsta);
     SNOW.STA_ID = cell(1,nsta);
     
+    %%% bring in the NRCS data into the main SNOW structure
     [~,ia,ib]=intersect(SNOW.TIME(:,sdate_col), NRCS.TIME(:,sdate_col));
     i1 = 1;
     i2 = nsta_nrcs;
@@ -171,6 +186,7 @@ if exist(all_database, 'file')~=2 || nanmax(flag_update)==1
         end
     end
     
+    %%% bring in the CDWR data into the main SNOW structure
     [~,ia,ib]=intersect(SNOW.TIME(:,sdate_col), CDWR.TIME(:,sdate_col));
     i1 = i2+1;
     i2 = nsta;
@@ -187,6 +203,26 @@ if exist(all_database, 'file')~=2 || nanmax(flag_update)==1
             SNOW.STA_ID(1,nsta_nrcs+j) = CDWR.STA_ID(j);
         else
             error('unexpected data type for CDWR STA_ID')
+        end
+    end
+
+    %%% bring in the Canada snow data into the main SNOW structure
+    [~,ia,ib]=intersect(SNOW.TIME(:,sdate_col), CA_SNOW.TIME(:,sdate_col));
+    i1 = i2+1;
+    i2 = nsta;
+    SNOW.WTEQ_mm(ia,i1:i2) = CA_SNOW.WTEQ_mm(ib,:);
+    SNOW.STA_LON(1,i1:i2) = CA_SNOW.STA_LON;
+    SNOW.STA_LAT(1,i1:i2) = CA_SNOW.STA_LAT;
+    SNOW.STA_ELEV_m(1,i1:i2) = CA_SNOW.STA_ELEV_m;
+    SNOW.STA_NAME(1,i1:i2) = CA_SNOW.STA_NAME;
+    % combine sta_IDs into single datatype (cellstr)
+    for j=1:nsta_canada
+        if isnumeric(CA_SNOW.STA_ID(j))==1
+            SNOW.STA_ID(1,nsta_nrcs+j) = cellstr(num2str(CA_SNOW.STA_ID(j)));
+        elseif iscellstr(CA_SNOW.STA_ID(j))==1
+            SNOW.STA_ID(1,nsta_nrcs+j) = CA_SNOW.STA_ID(j);
+        else
+            error('unexpected data type for Canadian STA_ID')
         end
     end
     

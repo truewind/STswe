@@ -51,6 +51,7 @@ time_end = floor(now);
 %%% names of databases (don't change these)
 nrcs_database = fullfile(path_data, 'SWE_database_NRCS.mat');
 cdwr_database = fullfile(path_data, 'SWE_database_CDWR.mat');
+canada_database = fullfile(path_data, 'SWE_database_Canada.mat');
 all_database = fullfile(path_data, 'SWE_database_ALL.mat');
 
 %% data settings
