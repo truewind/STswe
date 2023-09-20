@@ -1,4 +1,4 @@
-clear; clc; close all
+clear; close all
 
 %%% this script creates various plots which can be useful for the monthly
 %%% post
@@ -29,7 +29,7 @@ max_missing = 5;
 %% setup date
 %%% current date (now)
 % xSD = floor(now);
-xSD = datenum(2023,2,10); disp('OVERRIDE DATE')
+xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
 
 %%% get the current year, month, and day to review
 [r_year,r_month,r_day,~,~,~] = datevec(xSD);
@@ -98,17 +98,29 @@ iM_mlt = monthly_total_snowMelt(a,:);
 %%% off cumulative snowfall and melt, so we are consistent
 iM_dSWE = iM_acc-iM_mlt;
 
+%% unit conversion
+
+if strcmp(units_figs_text, 'cm')==1
+    % convert SWE from mm to cm
+    div_factor = 10;
+elseif strcmp(units_figs_text, 'in')==1
+    % convert SWE from mm to in
+    div_factor = 25.4;
+else
+    % leave SWE in mm
+    div_factor = 1;
+end
+iM_dSWE = iM_dSWE./div_factor;
 
 %% plot delta SWE through the course of this month
 
 SNOW.dSWE = iM_dSWE;
-SNOW.dSWE = SNOW.dSWE./25.4; % convert from mm to inches
 
 %%% pick limits for the data (in inches SWE)
 pct = 80;  %nominally 80
-p_acc=ceil(prctile(iM_acc, pct)./25.4);
+p_acc=ceil(prctile(iM_acc, pct)./div_factor);
 p_acc=nanmax([p_acc 1]);
-p_mlt=ceil(prctile(iM_mlt, pct)./25.4);
+p_mlt=ceil(prctile(iM_mlt, pct)./div_factor);
 p_mlt=nanmax([p_mlt 1]);
 % plim = nanmax([p_acc_90 p_mlt_90]);
 
@@ -147,9 +159,8 @@ SNOW.dSWE_clr(a) = col_zero;
 
 idomain =1;
 ptitle = {'Net Change in Snow Water Equivalent (SWE),'; ['from ' char(num2month(r_month)) ' 1 to ' char(num2month(r_month)) ' ' num2str(r_day) ', ' num2str(r_year)]};
-% ptitle = ['Net Change in SWE (inches water) over ' char(num2month(r_month, 1)) ' ' num2str(r_year)];
 cb_xtick = linspace(0,1,numel(cbinLab));
-cb_xlabel = 'inches';
+cb_xlabel = units_figs_text;
 
 noSNOW = SNOW.dSWE_clr.*0;
 plot_swe_stations(idomain, SNOW.STA_LAT, SNOW.STA_LON, SNOW.dSWE_clr, cmap, ptitle, cb_xtick, cbinLab, col_zero, cb_xlabel, noSNOW);
@@ -161,7 +172,7 @@ set(gcf, 'Renderer', 'zbuffer');
 
 xl=get(gca,'xlim');
 yl=get(gca,'ylim');
-ht=text(xl(1)+((xl(2)-xl(1))*1.1), yl(1) + ((yl(2)-yl(1))*0.01), 'Credit: M.Raleigh // Data: USDA NRCS and CA DWR', 'FontSize', 8, 'HorizontalAlignment', 'left');
+ht=text(xl(1)+((xl(2)-xl(1))*1.1), yl(1) + ((yl(2)-yl(1))*0.01), 'Credit: ' fig_credit_str ' // Data: USDA NRCS and CA DWR', 'FontSize', 8, 'HorizontalAlignment', 'left');
 set(ht,'Rotation', 90);
 
 % print('monthly_dSWE','-dpng','-r200')
@@ -207,7 +218,7 @@ set(gca, 'YTick', 1:nstates)
 set(gca, 'YTickLabel', stateProv_str)
 ylim([-1.5 0.5+nstates])
 title(ptitle)
-xlabel('Change in SWE (inches)')
+xlabel(['Change in SWE (' units_figs_text ')'])
 quiver(0,0,+3,0, 'b', 'LineWidth', 2')
 quiver(0,0,-3,0, 'r', 'LineWidth', 2')
 text(3.25,0, '\it gain', 'HorizontalAlignment', 'left', 'FontSize', 10, 'Color', 'b')
@@ -228,7 +239,7 @@ set(gcf, 'Renderer', 'zbuffer');
 
 xl=get(gca,'xlim');
 yl=get(gca,'ylim');
-ht=text(xl(1)+((xl(2)-xl(1))*1.1), yl(1) + ((yl(2)-yl(1))*0.01), 'Credit: M.Raleigh // Data: USDA NRCS and CA DWR', 'FontSize', 8, 'HorizontalAlignment', 'left');
+ht=text(xl(1)+((xl(2)-xl(1))*1.1), yl(1) + ((yl(2)-yl(1))*0.01), 'Credit: ' fig_credit_str ' // Data: USDA NRCS and CA DWR', 'FontSize', 8, 'HorizontalAlignment', 'left');
 set(ht,'Rotation', 90);
 
 % print('monthly_dSWE_boxplot','-dpng','-r200')

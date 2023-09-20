@@ -15,7 +15,7 @@ load(all_database);
 %% get percent of normal for this date
 
 %%% current date (now)
-%xSD = floor(now);
+% xSD = floor(now);
 xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
 
 %%% check to make sure we have enough stations reporting data on this date. if not, move
@@ -57,17 +57,26 @@ SWE2(SWE2>0) = 1;  % should this be >= ?? need to include zero SWE.
 SWE2=nansum(SWE2,1);
 goodSites = find(SWE2>=minYrs);
 
+%%% at the goodSites, get annual peak SWE for all prior years and then get
+%%% long-term (LT) mean
+if iMO>=10
+    curr_WY = iYR+1;
+else
+    curr_WY = iYR;
+end
+[~, snow_accum, ~, snow_wy] = snow_metrics(SNOW.TIME, SNOW.WTEQ_mm(:,goodSites), 25, [1980:1:curr_WY-1]);
+SWEpeak_LTmean = nanmean(snow_accum.peakSWE);
+
 %%% get current (c) SWE data at good sites
 a = find(SNOW.TIME(:,1)==iYR & SNOW.TIME(:,2)==iMO & SNOW.TIME(:,3)==iDA);
-SWEc = SNOW.WTEQ_mm(a,goodSites);  % redundant from above? see line 48
+SWEc = SNOW.WTEQ_mm(a,goodSites);  % redundant from above?
 
-%%% compute median SWE for this date at all good sites
-SWE3 = nanmedian(SWE(:,goodSites));
-SWE3 = round(100.*SWEc./SWE3);
+%%% compute current SWE relative to LT peak SWE at all good sites
+SWE3 = round(100.*SWEc./SWEpeak_LTmean);
 
-%%% convert current SWE to percent of median SWE
+%%% put the data back in the SNOW structure
 SNOW.SWE_pnrm = SNOW.WTEQ_mm(end,:).*NaN;
-SNOW.SWE_pnrm(1,goodSites) = SWE3;   % percent of median normal SWE
+SNOW.SWE_pnrm(1,goodSites) = SWE3;   % percent of LT peak SWE
 SWE_pnrm = SNOW.SWE_pnrm;
 
 
@@ -75,21 +84,25 @@ SWE_pnrm = SNOW.SWE_pnrm;
 
 close all;
 
-%%% load colorbar for climatological SWE percent
+%%% load colorbar for climatological SWE
 snowtoday_colorbar_climSWE;
 
 
 %%% map percent of median normal SWE to color bins
 SNOW.SWE_pnrm_clr = SNOW.SWE_pnrm .* NaN;
-for j=1:ncol
-    if j==1
-        SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm<cbins(j+2)) = j;
-    elseif j==ncol
-        SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=cbins(j)) = j;
-    else
-        SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=cbins(j) & SNOW.SWE_pnrm<cbins(j+1)) = j;
-    end
-end
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm<45) = 1;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=45 & SNOW.SWE_pnrm<55) = 2;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=55 & SNOW.SWE_pnrm<65) = 3;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=65 & SNOW.SWE_pnrm<75) = 4;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=75 & SNOW.SWE_pnrm<85) = 5;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=85 & SNOW.SWE_pnrm<95) = 6;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=95 & SNOW.SWE_pnrm<105) = 7;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=105 & SNOW.SWE_pnrm<115) = 8;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=115 & SNOW.SWE_pnrm<125) = 9;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=125 & SNOW.SWE_pnrm<135) = 10;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=135 & SNOW.SWE_pnrm<145) = 11;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=145 & SNOW.SWE_pnrm<165) = 12;
+SNOW.SWE_pnrm_clr(SNOW.SWE_pnrm>=165) = 13;
 
 
 if create_figs==1
@@ -237,7 +250,7 @@ if create_figs==1
         
         
         %%% annotations
-        title({'Percentage of Median (25+yr) SWE'; ['\rmPlot created: ' datestr(now, 'ddd mmm dd yyyy HH:MM PM') ' MT']; ['Data updated: ' datestr(datenum(iYR, iMO, iDA), 'ddd mmm dd yyyy HH:MM PM') ' MT']})
+        title({'Percentage of Mean Peak SWE (25+yr)'; ['\rmPlot created: ' datestr(now, 'ddd mmm dd yyyy HH:MM PM') ' MT']; ['Data updated: ' datestr(datenum(iYR, iMO, iDA), 'ddd mmm dd yyyy HH:MM PM') ' MT']})
         
         colormap(cmap);
         cb=colorbar('SouthOutside');
@@ -276,11 +289,12 @@ if create_figs==1
         
         cd(path_staging);  % do not CD in... write directly with path
         
-        print([datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_' ShortName '_normSWE'],'-dpng','-r200')
+        print([datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_' ShortName '_percentPeakSWE'],'-dpng','-r200')
         cd(path_root);
         
     end
 end
-%% save temp file w/ today's climSWE data
-save('temp_climSWE.mat', 'SWE_pnrm', 'iYR', 'iMO', 'iDA')
 
+%% save temp file w/ today's climSWE data
+SWE_percentPeakSWE = SNOW.SWE_pnrm;
+save('temp_percentPeakSWE.mat', 'SWE_percentPeakSWE', 'iYR', 'iMO', 'iDA')

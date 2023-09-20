@@ -17,8 +17,8 @@ snowtoday_settings;
 
 %% time
 
-% xSD = floor(now);
-xSD = datenum(2023,1,25);
+xSD = floor(now);
+
 [review_yr,review_mo,~,~,~,~] = datevec(xSD);
 
 %% cycle through and create animations
@@ -41,8 +41,6 @@ for iregion=1:nregions
         % select images in folder, save output gif (dswe_2020april), no loops, 0.75
         % sec between, no different delay for first/last
         image2animation_auto;
-
-
 
     end
 end

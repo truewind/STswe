@@ -12,11 +12,13 @@ snowtoday_spatial;
 %%% load the database
 load(all_database);
 
+
+
 %% get change in SWE for this date
 
 %%% current date (now)
-xSD = floor(now);
-%xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
+% xSD = floor(now);
+xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
 
 %%% check to make sure we have enough stations reporting data on this date.
 %%% if not, move backwards in time until satisfied
@@ -59,15 +61,23 @@ dSWE = SWEc-SWEy;
 a = find(abs(dSWE)<QC.min_dSWE);
 dSWE(a) = 0;
 
-% convert dSWE from mm to inches for plotting purposes
-dSWE = mm2in(dSWE);
 
-% convert SWEc (current SWE) from mm to inches for consistency
-SWEc = mm2in(SWEc);
+%% units for figures/visualization
+
+if strcmp(units_figs_text, 'cm')==1
+    % convert SWE from mm to cm
+    dSWE = dSWE./10;
+    SWEc = SWEc./10;
+elseif strcmp(units_figs_text, 'in')==1
+    % convert SWE from mm to in
+    dSWE = dSWE./25.4;
+    SWEc = SWEc./25.4;
+else
+    % leave SWE in mm
+end
 
 % store the data (1 x nsta) in the structure. don't know why.
 SNOW.dSWE = dSWE;   % change in SWE
-
 
 %% plotting
 
@@ -249,7 +259,7 @@ if create_figs==1
         
         
         %%% annotations
-        title({'Change in SWE (inches) in past 24 hours'; ['\rmPlot created: ' datestr(now, 'ddd mmm dd yyyy HH:MM PM') ' MT']; ['Data updated: ' datestr(datenum(iYR, iMO, iDA), 'ddd mmm dd yyyy HH:MM PM') ' MT']})
+        title({['Change in SWE (' units_figs_text ') in past 24 hours']; ['\rmPlot created: ' datestr(now, 'ddd mmm dd yyyy HH:MM PM') ' MT']; ['Data updated: ' datestr(datenum(iYR, iMO, iDA), 'ddd mmm dd yyyy HH:MM PM') ' MT']})
         
         
         

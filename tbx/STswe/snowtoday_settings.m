@@ -44,7 +44,6 @@ path_masks = fullfile(path_root, 'masks');
 
 %%% snow station data download options
 IMPORT_OPTS.FREQ = 'daily';     % data time step
-IMPORT_OPTS.UNITS = 0;          % data units (0=metric, 1=english)
 IMPORT_OPTS.MAX_INT = 0;        % maximum interpolation length (hrs) for missing data
 
 %%% time settings for start/end of data donwload
@@ -78,6 +77,12 @@ QC.min_dSWE = 5;            % minimum absolute daily change in SWE (mm)
 
 
 %% plotting and text file settings
+
+%%% name/author for figure credit
+fig_credit_str = 'M.Raleigh';
+
+%%% for figures and text files, specify the SWE data units: 'cm', 'mm', or 'in'
+units_figs_text = 'cm';    
 
 %%% if missing SWE data on current but not the previous day, use the previous
 %%% day's value?

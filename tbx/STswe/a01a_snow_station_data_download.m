@@ -12,6 +12,11 @@ clear; close all;
 % first usage 
 snowtoday_settings;
 
+%% other settings (do not change)
+
+% data units (0=metric, 1=english) for the downloaded SWE data in the database
+IMPORT_OPTS.UNITS = 0;      % we will use metric. see snowtoday_settings.m to change the units for the figures, text files
+
 %% check for latest NRCS, CDWR SWE data. download and update databases
 
 flag_update= [0 0 0];  % set flags to keep track of whether new data are downloaded (1=yes, 0=no)

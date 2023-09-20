@@ -12,12 +12,16 @@ load(all_database);
 %%% load temp files w/ snow analysis
 load('temp_climSWE.mat')
 iYR2 = iYR; iMO2 = iMO; iDA2 = iDA;
-load('temp_dSWE.mat')
 
+load('temp_dSWE.mat')
 if iYR~=iYR2 || iMO2~=iMO || iDA~=iDA2
     disp('WARNING: Dates do not match up for dSWE and climSWE for the daily text summary')
 end
 
+load('temp_percentPeakSWE.mat')
+if iYR~=iYR2 || iMO2~=iMO || iDA~=iDA2
+    disp('WARNING: Dates do not match up for percentPeakSWE and climSWE for the daily text summary')
+end
 
 %% prep
 
@@ -55,15 +59,16 @@ fprintf(fid, '%s\n', 'Column01 : site name');
 fprintf(fid, '%s\n', 'Column02 : latitude');
 fprintf(fid, '%s\n', 'Column03 : longitude');
 fprintf(fid, '%s\n', 'Column04 : elevation');
-fprintf(fid, '%s\n', 'Column05 : SWE (inches)');
+fprintf(fid, '%s\n', ['Column05 : SWE (' units_figs_text ')']);
 fprintf(fid, '%s\n', 'Column06 : percent of median long-term (25+yr) SWE');
-fprintf(fid, '%s\n', 'Column07 : daily change in SWE (inches)');
-fprintf(fid, '%s\n', 'Column08 : State');
-fprintf(fid, '%s\n', 'Column09 : HUC02');
-fprintf(fid, '%s\n', 'Column10 : HUC04');
+fprintf(fid, '%s\n', 'Column07 : percent of long-term peak SWE (25+yr)');
+fprintf(fid, '%s\n', ['Column08 : daily change in SWE (' units_figs_text ')']);
+fprintf(fid, '%s\n', 'Column09 : State');
+fprintf(fid, '%s\n', 'Column10 : HUC02');
+fprintf(fid, '%s\n', 'Column11 : HUC04');
 
-fprintf(fid,'%s\n', 'Name,Lat,Lon,Elev_m,SWE,normSWE,dSWE,State,HUC02,HUC04');
-head_str = '%s,%.4f,%.4f,%.1f,%.1f,%.1f,%.1f,%s,%s,%s\n';
+fprintf(fid,'%s\n', 'Name,Lat,Lon,Elev_m,SWE,normSWE,percentPeakSWE,dSWE,State,HUC02,HUC04');
+head_str = '%s,%.4f,%.4f,%.1f,%.1f,%.1f,%.1f,%.1f,%s,%s,%s\n';
 for j=1:numel(keepSTA)
     %%% HUC02
     if isempty(HUC02{j})==0
@@ -80,7 +85,7 @@ for j=1:numel(keepSTA)
     end
     
     
-    fprintf(fid, head_str, char(Name(j)), Lat(j), Lon(j), Elev_m(j), SWEc(j), climSWE(j), dSWE(j), char(State(j)), H2, H4);
+    fprintf(fid, head_str, char(Name(j)), Lat(j), Lon(j), Elev_m(j), SWEc(j), climSWE(j), SWE_percentPeakSWE(j), dSWE(j), char(State(j)), H2, H4);
 end
 
 fclose(fid);
