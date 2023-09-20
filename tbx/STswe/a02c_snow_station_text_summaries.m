@@ -11,7 +11,12 @@ load(all_database);
 
 %%% load temp files w/ snow analysis
 load('temp_climSWE.mat')
+iYR2 = iYR; iMO2 = iMO; iDA2 = iDA;
 load('temp_dSWE.mat')
+
+if iYR~=iYR2 || iMO2~=iMO || iDA~=iDA2
+    disp('WARNING: Dates do not match up for dSWE and climSWE for the daily text summary')
+end
 
 
 %% prep

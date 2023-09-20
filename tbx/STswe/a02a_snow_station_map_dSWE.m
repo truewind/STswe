@@ -15,8 +15,8 @@ load(all_database);
 %% get change in SWE for this date
 
 %%% current date (now)
-xSD = floor(now);
-%xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
+%xSD = floor(now);
+xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
 
 %%% check to make sure we have enough stations reporting data on this date.
 %%% if not, move backwards in time until satisfied
