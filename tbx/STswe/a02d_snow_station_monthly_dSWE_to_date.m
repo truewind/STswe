@@ -1,7 +1,6 @@
 clear; close all
 
-%%% this script creates various plots which can be useful for the monthly
-%%% post
+%%% this script creates a map and boxplots of to-date monthly dSWE
 
 %% loading
 

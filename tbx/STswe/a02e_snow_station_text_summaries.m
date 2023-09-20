@@ -60,8 +60,8 @@ fprintf(fid, '%s\n', 'Column02 : latitude');
 fprintf(fid, '%s\n', 'Column03 : longitude');
 fprintf(fid, '%s\n', 'Column04 : elevation');
 fprintf(fid, '%s\n', ['Column05 : SWE (' units_figs_text ')']);
-fprintf(fid, '%s\n', 'Column06 : percent of median long-term (25+yr) SWE');
-fprintf(fid, '%s\n', 'Column07 : percent of long-term peak SWE (25+yr)');
+fprintf(fid, '%s\n', 'Column06 : percent of median long-term (25+yr) SWE on this date');
+fprintf(fid, '%s\n', 'Column07 : percent of long-term (25+yr) peak SWE');
 fprintf(fid, '%s\n', ['Column08 : daily change in SWE (' units_figs_text ')']);
 fprintf(fid, '%s\n', 'Column09 : State');
 fprintf(fid, '%s\n', 'Column10 : HUC02');
@@ -91,4 +91,6 @@ end
 fclose(fid);
 
 
+%%% for consistency, check if any "N/A" values and replace with "NaN"
+find_and_replace(filepath_SWEsummary, 'N/A', 'NaN');
  
