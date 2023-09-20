@@ -111,6 +111,8 @@ else
     div_factor = 1;
 end
 iM_dSWE = iM_dSWE./div_factor;
+iM_acc = iM_acc./div_factor;
+iM_mlt = iM_mlt./div_factor;
 
 %% plot delta SWE through the course of this month
 
@@ -118,15 +120,15 @@ SNOW.dSWE = iM_dSWE;
 
 %%% pick limits for the data (in inches SWE)
 pct = 80;  %nominally 80
-p_acc=ceil(prctile(iM_acc, pct)./div_factor);
+p_acc=ceil(prctile(iM_acc, pct));
 p_acc=nanmax([p_acc 1]);
-p_mlt=ceil(prctile(iM_mlt, pct)./div_factor);
+p_mlt=ceil(prctile(iM_mlt, pct));
 p_mlt=nanmax([p_mlt 1]);
 % plim = nanmax([p_acc_90 p_mlt_90]);
 
 nc = 6;
-cbins = [linspace(-30,0,nc), linspace(0,1,nc)];  % May 2023
-% cbins = [linspace(-1.*p_mlt,0,nc), linspace(0,p_acc,nc)]; 
+% cbins = [linspace(-30,0,nc), linspace(0,1,nc)];  % May 2023 override (inches)
+cbins = [linspace(-1.*p_mlt,0,nc), linspace(0,p_acc,nc)]; 
 ncol = numel(cbins)+1;
 cbinLab = cell(1,ncol);
 cmap = cbrewer('div', 'RdBu', ncol); 
@@ -172,11 +174,14 @@ set(gcf, 'Renderer', 'zbuffer');
 
 xl=get(gca,'xlim');
 yl=get(gca,'ylim');
-ht=text(xl(1)+((xl(2)-xl(1))*1.1), yl(1) + ((yl(2)-yl(1))*0.01), 'Credit: ' fig_credit_str ' // Data: USDA NRCS and CA DWR', 'FontSize', 8, 'HorizontalAlignment', 'left');
+ht=text(xl(1)+((xl(2)-xl(1))*1.1), yl(1) + ((yl(2)-yl(1))*0.01), ['Credit: ' fig_credit_str ' // Data: USDA NRCS and CA DWR'], 'FontSize', 8, 'HorizontalAlignment', 'left');
 set(ht,'Rotation', 90);
 
-% print('monthly_dSWE','-dpng','-r200')
-% print('monthly_dSWE','-depsc'); % depsc for color, deps for B&W
+
+pathfile_image = fullfile(path_PL_archive, 'Analysis', [datestr(xSD,'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_monthly_dSWE']);
+print(pathfile_image,'-dpng','-r200')
+print(pathfile_image,'-depsc'); % depsc for color, deps for B&W
+
 
 %% state-by-state box plot of monthly dSWE
 
@@ -239,8 +244,12 @@ set(gcf, 'Renderer', 'zbuffer');
 
 xl=get(gca,'xlim');
 yl=get(gca,'ylim');
-ht=text(xl(1)+((xl(2)-xl(1))*1.1), yl(1) + ((yl(2)-yl(1))*0.01), 'Credit: ' fig_credit_str ' // Data: USDA NRCS and CA DWR', 'FontSize', 8, 'HorizontalAlignment', 'left');
+ht=text(xl(1)+((xl(2)-xl(1))*1.1), yl(1) + ((yl(2)-yl(1))*0.01), ['Credit: ' fig_credit_str ' // Data: USDA NRCS and CA DWR'], 'FontSize', 8, 'HorizontalAlignment', 'left');
 set(ht,'Rotation', 90);
 
-% print('monthly_dSWE_boxplot','-dpng','-r200')
-% print('monthly_dSWE_boxplot','-depsc'); % depsc for color, deps for B&W
+pathfile_image = fullfile(path_PL_archive, 'Analysis', [datestr(xSD,'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_monthly_dSWE_boxplot']);
+print(pathfile_image,'-dpng','-r200')
+print(pathfile_image,'-depsc'); % depsc for color, deps for B&W
+
+
+

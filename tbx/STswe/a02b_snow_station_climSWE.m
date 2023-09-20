@@ -274,10 +274,9 @@ if create_figs==1
         
         
         
-        cd(path_staging);  % do not CD in... write directly with path
-        
-        print([datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_' ShortName '_normSWE'],'-dpng','-r200')
-        cd(path_root);
+        pathfile_img = fullfile(path_staging, [datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_' ShortName '_normSWE']);
+        print(pathfile_img,'-dpng','-r200')
+
         
     end
 end

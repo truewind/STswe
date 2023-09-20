@@ -285,12 +285,10 @@ if create_figs==1
         ht=text( xl(1) -((xl(2)-xl(1))*0.05), yl(1) +((yl(2)-yl(1))*0.05), LongName);
         set(ht,'Rotation',90);
         
-        
-        
-        cd(path_staging);  % do not CD in... write directly with path
-        
-        print([datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_' ShortName '_percentPeakSWE'],'-dpng','-r200')
-        cd(path_root);
+
+        pathfile_img = fullfile(path_staging, [datestr(datenum(iYR, iMO, iDA),'yyyymmdd') 'inputs_createdOn' datestr(datenum(now),'yyyymmdd') '_' ShortName '_percentPeakSWE']);
+        print(pathfile_img,'-dpng','-r200')
+
         
     end
 end
