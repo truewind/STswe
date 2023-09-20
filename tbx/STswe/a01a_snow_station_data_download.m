@@ -189,7 +189,7 @@ if exist(all_database, 'file')~=2 || nanmax(flag_update)==1
     %%% bring in the CDWR data into the main SNOW structure
     [~,ia,ib]=intersect(SNOW.TIME(:,sdate_col), CDWR.TIME(:,sdate_col));
     i1 = i2+1;
-    i2 = nsta;
+    i2 = nsta_nrcs+nsta_cdwr;
     SNOW.WTEQ_mm(ia,i1:i2) = CDWR.WTEQ_mm(ib,:);
     SNOW.STA_LON(1,i1:i2) = CDWR.STA_LON;
     SNOW.STA_LAT(1,i1:i2) = CDWR.STA_LAT;

@@ -1,0 +1,13 @@
+1,Alberta,AB
+2,British Columbia,BC
+3,Manitoba,MB
+4,New Brunswick,NB
+5,Newfoundland and Labrador,NL
+7,Nova Scotia,NS
+8,Ontario,ON
+9,Prince Edward Island,PE
+10,Quebec,QC
+11,Saskatchewan,SK
+12,Yukon,YT
+13,Northwest Territories,NT
+14,Nunavut,NU

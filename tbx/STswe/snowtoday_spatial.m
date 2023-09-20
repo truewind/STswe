@@ -29,10 +29,11 @@ shp_huc02 = load(path_shp_huc02);
 shp_huc04 = load(path_shp_huc04);
 
 tab_political = readtable(path_tab_political);
+tab_political_ca = readtable(path_tab_political_CA);
 tab_huc = readtable(path_tab_huc);
 
 
-%% TEMPORARY CODE TO ADD ALASKA UNTIL WE HAVE MASK
+%% TEMPORARY CODE TO ADD ALASKA UNTIL WE HAVE MASK/SHAPE .mat
 
 %%% Append Alaska to shp_states structure
 if nanmax(strcmp(shp_states.LongName, 'Alaska'))==0
@@ -63,6 +64,25 @@ if nanmax(strcmp(shp_huc02.LongName, 'Alaska'))==0
     shp_huc02.S(nshp+1).name = 'Alaska';
 end
 
+%% TEMPORARY CODE TO ADD British Columbia UNTIL WE HAVE MASK/SHAPE .mat
+
+%%% Append BC to shp_states structure
+if nanmax(strcmp(shp_states.LongName, 'British Columbia'))==0
+    %%% then BC is not in the state structure. add it
+    nshp = numel(shp_states.LongName);
+    shp_states.LongName(nshp+1,1) = cellstr('British Columbia');
+    shp_states.ShortName(nshp+1,1) = cellstr('CABC');
+    states_tmp = shaperead(path_shp_CA_prov);
+    shp_states.S(nshp+1).Geometry ='Polygon';
+    shp_states.S(nshp+1).BoundingBox =states_tmp(12).BoundingBox;
+    shp_states.S(nshp+1).X =states_tmp(12).X;
+    shp_states.S(nshp+1).Y =states_tmp(12).Y;
+    shp_states.S(nshp+1).STATE = 'British Columbia';
+    shp_states.S(nshp+1).STATE_FIPS = 'CA02';
+end
+
+
+
 %% populate the AOI structure
 
 %%% intialize variables
@@ -76,28 +96,46 @@ AOI.lon_ll = nan(nAOI,1);
 AOI.shp_recNum = nan(nAOI,1);
 
 
+
 %%% populate the values for AOIs
 for j=1:nAOI
     %%% current AOI
-    curr_AOI = AOI.ID(j);
+    curr_AOI = char(AOI.ID(j));
     
     %%% determine whether political or HUC. If political, determine whether
     %%% state or county. If HUC, determine HUC 2, 4, 6, or 8. Get the
     %%% ShortName and LongName
-    if curr_AOI<0
+    flag_huc=0;
+    flag_political=0;
+    flag_wus=0;
+    if strcmp(curr_AOI(1:3), 'HUC')==1
+        flag_huc =1;
+    elseif strcmp(curr_AOI, 'US0')==1
+        flag_wus = 1;
+    else
+        flag_political=1;
+    end
+
+
+
+    if flag_political==1
         % then this is a political location. take the abs value so we have
         % a positive value, and search for it in the political table.
-        curr_AOI=abs(curr_AOI);
+        curr_AOI_num=abs(str2double(curr_AOI(3:end)));
+        curr_AOI_country = curr_AOI(1:2);
         
-        %%% find this state in the political table
-        a = find(strcmp({shp_states.S.STATE_FIPS}.', num2str(curr_AOI,'%02.f'))==1);
+        %%% find this state in the political table  
+        if strcmp(curr_AOI_country, 'CA')==1
+            a = find(strcmp({shp_states.S.STATE_FIPS}.', [curr_AOI_country num2str(curr_AOI_num,'%02.f')])==1);
+        else
+            a = find(strcmp({shp_states.S.STATE_FIPS}.', num2str(curr_AOI_num,'%02.f'))==1);
+        end
 %         a = find(tab_political.Var1==curr_AOI);
         
         %%% determine whether it is a state or county. Assign the shortname
         %%% and longname
-        if curr_AOI<100
+        if curr_AOI_num<100
             AOI.Type(j) = cellstr('state');
-
 
             %%% get LongName and ShortName (state abbreviation)
             AOI.LongName(j,1) = shp_states.LongName(a);
@@ -145,18 +183,22 @@ for j=1:nAOI
         
         
         
-    elseif curr_AOI>0
+    elseif flag_huc==1
         % then this is a HUC
-        
 
-        if curr_AOI<10^2
+         % then this is a political location. take the abs value so we have
+        % a positive value, and search for it in the political table.
+        curr_AOI_num=abs(str2double(curr_AOI(4:end)));
+
+
+        if curr_AOI_num<10^2
             %%% then this is a HUC2
 
 
 
             %%% find this HUC02
             huc_cellstr = {shp_huc02.S.huc2}.';
-            a = find(strcmp(huc_cellstr, num2str(curr_AOI,'%02.f'))==1);
+            a = find(strcmp(huc_cellstr, num2str(curr_AOI_num,'%02.f'))==1);
 
             %%% store long name
             AOI.LongName(j,1) = shp_huc02.LongName(a);
@@ -254,7 +296,7 @@ for j=1:nAOI
         
         
         
-    elseif curr_AOI==0
+    elseif flag_wus==1
         % this is the US West domain
         AOI.LongName(j,1) = cellstr('Western US');
         AOI.ShortName(j,1) = cellstr('USwest');
