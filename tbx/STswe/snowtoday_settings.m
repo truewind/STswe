@@ -23,6 +23,9 @@ path_ssh_key = fullfile(getenv('HOME'), '.ssh', 'id_rsa_snowToday');
 %%% specify the PL archive location for images
 path_PL_archive = '/pl/active/rittger_esp/SnowToday/SnowStations/image_archive/';
 
+%%% specify the PL archive location for animations
+path_PL_archive_animate = '/pl/active/rittger_esp/SnowToday/SnowStations/animate_archive/';
+
 %%% specify the PL root location for public data access
 path_PL_text_data = '/pl/active/rittger_public/snow-today/';
 
@@ -74,7 +77,11 @@ QC.min_swe_soft = 25;       % assume sensor noise below this value
 QC.min_dSWE = 5;            % minimum absolute daily change in SWE (mm)
 
 
-%% plotting settings
+%% plotting and text file settings
+
+%%% if missing SWE data on current but not the previous day, use the previous
+%%% day's value?
+toggle_carryPrevSWE = 1;        % enter 0 to not carry over previous SWE if missing, 1 to carry it over
 
 %%% toggle figure creation on or off
 create_figs = 1;    % enter 1 to generate figures, 0 to turn off

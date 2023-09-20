@@ -48,6 +48,8 @@ end
 %%% find this date in the record
 a = find(SNOW.TIME(:,year_col)==iYR & SNOW.TIME(:,month_col)==iMO & SNOW.TIME(:,day_col)==iDA);
 
+
+
 %%% get SWE at current date (c), yesterday (y), and change in swe (dSWE)
 SWEc = SNOW.WTEQ_mm(a,:);
 SWEy = SNOW.WTEQ_mm(a-1,:);

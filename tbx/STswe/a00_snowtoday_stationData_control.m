@@ -17,26 +17,20 @@ close all;
 disp('SNOW STATIONS')
 
 %%% step 1a: download latest snow station data
-disp('  Step 1: downloading data')
+disp('  Step 1a: downloading data')
 a01a_snow_station_data_download;
+disp('  ... DONE!')
+disp('  .')
 
 %%% step 1b: QC the merged database
+disp('  Step 1b: basic QC on the data')
 a01b_snow_station_data_QC;
 disp('  ... DONE!')
 disp('  .')
 
-%%% step 2a: generate plot for daily change in SWE (dSWE)
+%%% step 2: generate figures and text files
 disp('  Step 2: generating figures and text summary')
-a02a_snow_station_map_dSWE;
-
-%%% step 2b: generate plot for daily SWE percent of median
-a02b_snow_station_climSWE;
-disp('  ... DONE!')
-disp('  .')
-
-%%% step 2c: create daily summary of SWE variables at all stations in
-%%% single text file
-a02c_snow_station_text_summaries;
+a02_snowtoday_figs_textfiles_control;
 disp('  ... DONE!')
 disp('  .')
 
@@ -61,5 +55,11 @@ disp('  .')
 %%% step 6: write state/huc summaries to PL
 disp('  Step 6: writing year-to-date SWE summaries by state and HUC')
 a06_snow_station_AOI_summary;
+disp('  ... DONE!')
+disp('  .') 
+
+%%% step 7: create animations of dSWE and clim SWE for month to date
+disp('  Step 7: generating animations of dSWE and clim SWE for month to date')
+a07_snow_station_animate;
 disp('  ... DONE!')
 disp('  .') 
