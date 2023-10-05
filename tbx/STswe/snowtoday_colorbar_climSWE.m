@@ -15,9 +15,15 @@
 % 135-145
 % 145-165
 % 165+
-ncol = 13;      % number of colors
-cmap = cbrewer('div', 'RdBu', ncol);  % create colormap with colorbrewer
-cbins = [0 45 55 65 75 85 95 105 115 125 135 145 165]; % define the bin dividers
+
+% number of colors
+ncol = 13;  
+
+% create colormap with colorbrewer
+cmap = cbrewer('div', 'RdBu', ncol);  
+
+% define the bin dividers and labels
+cbins = [0 45 55 65 75 85 95 105 115 125 135 145 165]; 
 cbinLab = cell(1,numel(cbins)+1);
 for j=1:ncol
     cbinLab(j) = cellstr(num2str(cbins(j)));

@@ -1,7 +1,8 @@
-% define colormap for use in dSWE maps 
-% 
-% symmetrical, but unevenly spaced colorbar (since might get more melt than accum)
-nc = 6;  % number of colors
+% define colormap for use in dSWE maps.
+% produces symmetrical, but unevenly spaced colorbar (since might get more melt than accum)
+
+% number of colors
+nc = 6;  
 
 %%% set up bins based on units specified in settings file
 if strcmp(units_figs_text, 'in')==1
@@ -12,7 +13,7 @@ elseif strcmp(units_figs_text, 'mm')==1
     cbins = [linspace(-50,0,nc), linspace(0,40,nc)]; 
 end
 
-
+%%% use color brewer to establish the color scheme
 ncol = numel(cbins)+1;
 cbinLab = cell(1,ncol);
 cmap = cbrewer('div', 'RdBu', ncol); 

@@ -12,21 +12,24 @@ clear; close all;
 % first usage 
 snowtoday_settings;
 
-%% other settings (do not change)
+%% other settings (do not change!)
 
 % data units (0=metric, 1=english) for the downloaded SWE data in the database
-IMPORT_OPTS.UNITS = 0;      % we will use metric. see snowtoday_settings.m to change the units for the figures, text files
+IMPORT_OPTS.UNITS = 0;      % we will use metric for SWE data stored in our database
+                            % see snowtoday_settings.m to change the units for the figures, text files
 
 %% check for latest NRCS, CDWR SWE data. download and update databases
 
-flag_update= [0 0 0];  % set flags to keep track of whether new data are downloaded (1=yes, 0=no)
+% set flags to keep track of whether new data are downloaded (1=yes, 0=no)
+flag_update= [0 0 0];  
 
 %%% loop through the networks
 for j=1:3
     % j=1 NRCS SNOTEL
     % j=2 CDWR snow pillow
-    % j=3 Canada (BC) snow pillows
+    % j=3 Canada (BC) snow pillows (accessed via NRCS)
     
+    %%% specify data donwload / import settings
     if j==1
         IMPORT_OPTS.SITES = {'SNTL'};
         IMPORT_OPTS.OBS = {'WTEQ'};
@@ -37,12 +40,12 @@ for j=1:3
         name_database = cdwr_database;
     elseif j==3
         IMPORT_OPTS.SITES = 'SNOW';         % select SNOTEL network
-        IMPORT_OPTS.STATEPROV = 'BC';       % select a specific state (optional)
+        IMPORT_OPTS.STATEPROV = 'BC';       % select a specific state/prov. (optional)
         IMPORT_OPTS.OBS = {'WTEQ'};         % select variables
         name_database = canada_database;
     end
     
-    
+    %%% check if this network's database exists
     if exist(name_database, 'file')==2
         %%% then a database exists for this network. load it.
         load(name_database)
@@ -146,7 +149,7 @@ end
 %% merge all networks into a single structure (the ALL database)
 
 if exist(all_database, 'file')~=2 || nanmax(flag_update)==1
-    disp(' ... merging NRCS, CDWR, and Canadian snow pillows into single database')
+    disp(' ... merging NRCS, CDWR, and Canadian snow pillow datasets into single database')
     
     %%% load the databases
     load(nrcs_database)
@@ -245,7 +248,6 @@ if exist(all_database, 'file')~=2 || nanmax(flag_update)==1
         if strcmp(FX, 'TIME')==1
             % skip time
         else
-%             eval(['SNOW.' FX '=SNOW.' FX '(:,good_sta);'])
             %%% testing this convention
             srcInfo = SNOW.(FX);
             SNOW.(FX) = srcInfo(:,good_sta);

@@ -10,7 +10,7 @@
 
 %% paths
 %%% add path to the folder than includes various functions used in the code
-path_functions = './functions';
+path_functions = './functions';     % probably does not need to change
 addpath(path_functions);
 
 %%% specify root path for snow today operational files
@@ -140,10 +140,12 @@ for i = 1:numel(AOI.ID)
     end
 end
 
+% remove any duplicates
+AOI.ID = unique(AOI.ID); 
 
-AOI.ID = unique(AOI.ID); % remove any duplicates
+% make AOI a column vector
 if size(AOI.ID,1) ==1
-    AOI.ID = AOI.ID'; % make AOI a column vector
+    AOI.ID = AOI.ID'; 
 end
 nAOI = numel(AOI.ID);
 
