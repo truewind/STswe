@@ -28,12 +28,12 @@ max_missing = 5;
 %% setup date
 %%% current date (now)
 xSD = floor(now);
-%xSD = datenum(2023,4,15); disp('OVERRIDE ON DATE')
+% xSD = datenum(2023,4,3); disp('OVERRIDE ON DATE')
 
 %%% get the current year, month, and day to review
 [r_year,r_month,r_day,~,~,~] = datevec(xSD);
 
-
+%%% get the current water year (cWY)
 if r_month>=10
     cWY = r_year+1;
 else
@@ -75,14 +75,7 @@ acc(acc>max_dSWE) = NaN;
 mlt(mlt>max_dSWE) = NaN;
 
 
-%%% save a copy that will be used to look at mean storm intensity
-acc2 = acc;
-acc2(acc2==0) = NaN;
-[monthly_mean_snowAccum, agg_yr, agg_month]=aggMON(SNOW.TIME, acc2, 1, 2);
-a = find(agg_yr==r_year & agg_month==r_month);
-iM_acc_mean = monthly_mean_snowAccum(a,:);
-
-%%% summarize accumulation on a monthly basis
+%%% summarize accumulation to date for this month
 [monthly_total_snowAccum, agg_yr, agg_month]=aggMON(SNOW.TIME, acc, 5, 2);
 a = find(agg_yr==r_year & agg_month==r_month);
 iM_acc = monthly_total_snowAccum(a,:);
@@ -187,6 +180,9 @@ print(pathfile_image,'-depsc'); % depsc for color, deps for B&W
 %%% top to bottom state order
 countryStateProv = {'USAK', 'CABC', 'USWA', 'USID', 'USMT', 'USOR', 'USWY', 'USSD', 'USCA', 'USNV', 'USUT', 'USCO', 'USAZ', 'USNM'};
 stateProv_str = {'Alaska', 'British Columbia', 'Washington', 'Idaho', 'Montana', 'Oregon', 'Wyoming', 'South Dakota', 'California', 'Nevada', 'Utah', 'Colorado', 'Arizona', 'New Mexico'};
+
+%%% flip the order so they plot correctly
+countryStateProv = fliplr(countryStateProv);
 stateProv_str = fliplr(stateProv_str);
 
 
@@ -205,10 +201,10 @@ for j=1:nstates
     %%% current state/prov
     curr_StateProv = char(countryStateProv(j));
     
+    
     %%% find snow stations in this state/province
     in = find(strcmp(SNOW.STA_STATE, curr_StateProv)==1);
     
-
     p_mn=plot(nanmean(SNOW.dSWE(in).*noSNOW2(in)), j, 'LineStyle', 'none', 'Marker', 'd', 'MarkerFaceColor', 'w', 'MarkerEdgeColor', 'k', 'MarkerSize', 7, 'LineWidth', 1);
     
     for k=1:numel(in)
