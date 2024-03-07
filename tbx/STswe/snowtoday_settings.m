@@ -30,7 +30,9 @@ path_PL_archive_animate = '/pl/active/rittger_esp/SnowToday/SnowStations/animate
 path_PL_text_data = '/pl/active/rittger_public/snow-today/';
 
 %%% specify the path on NuSnow for SWE
-path_nusnow_swe = '/share/apps/snow-today/incoming/snow-water-equivalent/';
+% path_nusnow_swe = '/share/apps/snow-today/incoming/snow-water-equivalent/';
+path_nusnow_swe = '/share/apps/snow-today/production/incoming/snow-water-equivalent/';
+% path_nusnow_swe = '/production/incoming/snow-water-equivalent/';
 
 %%% these are in the STswe project
 path_data = fullfile(path_root, 'data');

@@ -57,9 +57,10 @@ if isempty(D)==0
             end
         end
 
-
+       
         try
             %%% transfer to nusnow via scp and using SSH key
+            disp(['scp -i ' char(path_ssh_key) ' ' fullfile(path_staging, iname) ' snow_today@nusnow.colorado.edu:' path_nusnow_swe])
             system(['scp -i ' char(path_ssh_key) ' ' fullfile(path_staging, iname) ' snow_today@nusnow.colorado.edu:' path_nusnow_swe]);
 
             %%% add to tally of files transferred
